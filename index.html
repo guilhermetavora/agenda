@@ -38,6 +38,127 @@
 @media (max-width:520px){.dstrip{gap:4px;padding:10px 12px 6px}.dnav{padding:12px 14px 2px}.fpend .panel-h .seg{width:100%}.fpend .panel-h .seg button{flex:1}}
 
 .arc{display:none!important}
+.mtags{display:flex;flex-wrap:wrap;gap:4px;margin-top:2px}
+.mtag{display:inline-flex;align-items:center;gap:4px;max-width:100%;font-size:11px;font-weight:600;line-height:1;padding:4px 7px;border-radius:999px;background:color-mix(in srgb,var(--fc) 16%,transparent);color:var(--ink);border:1px solid color-mix(in srgb,var(--fc) 40%,transparent)}
+.mtag .mtn{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.mtag b{font-family:var(--f-mono);font-weight:600;color:color-mix(in srgb,var(--fc) 70%,var(--ink))}
+.mc.out .mtag{opacity:.55}
+@media (max-width:640px){.mtags{gap:3px}.mtag{padding:3px 5px;font-size:10px}.mtag .mtn{display:none}.mtag{background:var(--fc);border-color:var(--fc)}.mtag b{color:#fff}}
+.cp-h{width:100%;border:0;border-bottom:1px solid var(--line);background:none;font:inherit;color:inherit;text-align:left;cursor:pointer}
+.cp:not(.open) .cp-h{border-bottom:0}
+.cp-h h2{display:flex;align-items:center;gap:10px}
+.cp-h:hover{background:var(--sunken)}
+.cp.open .cp-h .chev{transform:rotate(90deg)}
+
+.chev{flex:none;transition:transform .18s ease;color:var(--muted)}
+.open > .pg-h .chev,.open > .tg-hw .chev{transform:rotate(90deg)}
+.pg{border-top:1px solid var(--line)}
+.pg:first-child{border-top:0}
+.pg-h{display:flex;align-items:center;gap:10px;width:100%;padding:16px 20px;border:0;background:none;font:inherit;font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;color:var(--ink);text-align:left;cursor:pointer}
+.pg-h:hover{background:var(--sunken)}
+.pg-h.late{color:var(--danger)}
+.pg-h .n{font-family:var(--f-mono);font-weight:500;margin-left:auto;color:var(--muted)}
+.pg-h.late .n{color:var(--danger)}
+.tg-hw{display:flex;align-items:center}
+.tg-hw .tg-h{flex:1;padding:16px 8px 16px 20px}
+.tg-hw .tg-h:hover{background:none}
+.tg-hw:hover{background:var(--sunken)}
+.tg-late{font-size:11.5px;font-weight:600;color:var(--danger)}
+.tg-open{border:0;background:none;font-size:20px;line-height:1;color:var(--muted);padding:10px 18px 10px 8px;cursor:pointer}
+.tg-open:hover{color:var(--accent)}
+.tg{padding-bottom:0}.tg.open{padding-bottom:6px}
+
+.tg{border-top:1px solid var(--line);padding-bottom:6px}
+.tg:first-of-type{border-top:0}
+.tg-h{display:flex;align-items:center;gap:10px;width:100%;padding:18px 20px 8px;border:0;background:none;font:inherit;color:var(--ink);text-align:left;cursor:pointer}
+.tg-h .fsq{width:13px;height:13px;margin:0;box-shadow:none}
+.tg-h .tg-n{font-family:var(--f-display);font-size:18px;font-weight:700}
+.tg-h .n,.tg-s .n{font-family:var(--f-mono);font-size:12px;color:var(--muted);margin-left:auto}
+button.tg-h:hover .tg-n{color:var(--accent)}
+.tg-s{display:flex;align-items:center;gap:8px;width:100%;padding:12px 20px 4px 44px;border:0;background:none;font:inherit;font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;font-weight:600;color:var(--muted);text-align:left;cursor:pointer}
+.tg-s .fsq{width:8px;height:8px;margin:0;box-shadow:none}
+.tg-s:hover{color:var(--accent)}
+.pill.low{color:var(--muted);border-color:var(--line)}
+
+.wn.dg{display:grid;grid-template-columns:auto 1fr;column-gap:10px;row-gap:2px;align-items:center;text-align:left}
+.wn.dg .small{grid-column:2;color:var(--muted)}
+.klegend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+.klegend span{display:inline-flex;align-items:center;gap:6px}
+.klegend .kdot{display:inline-block}
+.fboard{display:flex;flex-direction:column;padding:8px 12px 14px}
+.fbrow{display:grid;grid-template-columns:minmax(110px,190px) minmax(0,1fr) 44px;gap:14px;align-items:center;padding:9px 8px;border:0;background:none;font:inherit;color:inherit;text-align:left;border-radius:10px;cursor:pointer}
+.fbrow:hover{background:var(--sunken)}
+.fbrow.sub .fbn{padding-left:22px;font-size:13px;color:var(--muted)}
+.fbn{display:flex;align-items:center;gap:9px;font-weight:600;font-size:14px;min-width:0}
+.fbn .fsq{width:10px;height:10px;margin:0;box-shadow:none}
+.fbbar{display:flex;height:22px;border-radius:7px;overflow:hidden;background:var(--sunken);gap:2px}
+.fbbar i{display:flex;align-items:center;justify-content:center;font-style:normal;font-family:var(--f-mono);font-size:11px;color:#fff;min-width:22px}
+.fbbar i.k-todo{background:var(--accent)}.fbbar i.k-doing{background:var(--ev)}.fbbar i.k-done{background:var(--note)}
+.fbbar em{font-size:12px;color:var(--muted);padding:3px 10px;font-style:normal}
+.fbt{font-family:var(--f-mono);font-size:12px;color:var(--muted);text-align:right}
+@media (max-width:520px){.fbrow{grid-template-columns:92px minmax(0,1fr) 36px;gap:8px}.fbrow.sub .fbn{padding-left:12px}}
+
+.fpend{margin-bottom:16px}
+.fbelow{margin-bottom:8px}
+.fbelow:not(.two) > .panel{margin-bottom:16px}
+.kanban{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;padding:16px}
+.kcol{background:var(--paper);border:1px solid var(--line);border-radius:14px;display:flex;flex-direction:column;min-width:0;transition:border-color .15s,background .15s}
+.kcol.over{border-color:var(--accent);background:var(--hl)}
+.kcol-h{display:flex;align-items:center;gap:8px;padding:12px 14px 8px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;color:var(--muted)}
+.kcol-h .n{font-family:var(--f-mono);font-weight:500;margin-left:auto}
+.kdot{width:8px;height:8px;border-radius:50%;flex:none}
+.kdot.k-todo{background:var(--accent)}.kdot.k-doing{background:var(--ev)}.kdot.k-done{background:var(--note)}
+.kcol-b{display:flex;flex-direction:column;gap:8px;padding:4px 10px 12px;min-height:70px}
+.kempty{font-size:12.5px;color:var(--muted);padding:14px 6px;text-align:center;border:1px dashed var(--line);border-radius:10px}
+.kcard{position:relative;display:grid;grid-template-columns:22px minmax(0,1fr);gap:10px;align-items:start;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:11px 12px;cursor:grab;touch-action:pan-y;transition:transform .22s ease,box-shadow .22s ease}
+.kcard.dragging{opacity:.45}
+.kcard.prio-alta{border-left:3px solid var(--danger)}
+.kcard .it-main{padding:0;text-align:left;background:none;border:0;font:inherit;color:inherit;cursor:pointer;width:100%}
+.kcard .it-title{font-size:14px;font-weight:600;line-height:1.35;overflow-wrap:anywhere}
+.kcard.is-done .it-title{text-decoration:line-through;color:var(--muted);font-weight:500}
+.kmeta{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:6px;font-size:12px;color:var(--muted)}
+.kd{font-family:var(--f-mono);font-size:11.5px}
+.kd.late{color:var(--danger);font-weight:600}.kd.today{color:var(--accent);font-weight:600}
+.kmv{grid-column:2;justify-self:start;margin-top:2px;font:inherit;font-size:11.5px;font-weight:600;color:var(--ev);background:none;border:0;padding:2px 0;cursor:pointer;opacity:.75}
+.kmv:hover{opacity:1;text-decoration:underline}
+.pill.doing{color:var(--ev);border-color:var(--ev)}
+.vst.doing{color:var(--ev);background:color-mix(in srgb,var(--ev) 10%,transparent)}
+.vfoot{display:flex;gap:10px;flex-wrap:wrap}.vfoot .btn{flex:1;padding:12px;margin:0}
+.kcard.swiping{transition:none;transform:translateX(var(--sx));box-shadow:calc(-1 * var(--sx)) 0 0 0 var(--sunken)}
+.kcard.swiping.swipe-ok{box-shadow:calc(-1 * var(--sx)) 0 0 0 var(--note)}
+.kcard.swiping::after{content:attr(data-swipe);position:absolute;top:50%;left:calc(-1 * var(--sx) + 14px);transform:translateY(-50%);font-size:18px;font-weight:700;color:var(--muted)}
+.kcard.swiping.swipe-ok::after{color:#fff}
+.kcol{overflow-x:clip}
+@media (max-width:820px){.kanban{grid-template-columns:1fr;padding:12px}}
+
+.vsheet .sheet-top{gap:10px;margin-bottom:0}
+#v-body{display:flex;flex-direction:column;gap:18px}
+#v-body .snooze{margin-top:-8px}
+.vsec .clbar{margin-top:8px}
+.v-acts{display:flex;gap:8px;align-items:center}
+.v-acts .btn{display:inline-flex;align-items:center;gap:6px}
+.v-title{display:flex;gap:12px;align-items:flex-start}
+.v-title h2{margin:0;font-family:var(--f-display);font-size:24px;line-height:1.25;flex:1;min-width:0;overflow-wrap:anywhere}
+.v-title h2.done{text-decoration:line-through;color:var(--muted)}
+.v-title .dot.big{width:12px;height:12px;border-radius:50%;background:var(--ev);margin-top:11px;flex:none}
+.vst{display:inline-block;font-size:12.5px;font-weight:600;padding:4px 10px;border-radius:999px;background:var(--sunken);color:var(--muted)}
+.vst.ok{color:var(--note)}.vst.late{color:var(--danger);background:color-mix(in srgb,var(--danger) 10%,transparent)}.vst.today{color:var(--accent);background:var(--hl)}
+.vprops{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px 16px;margin:0;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px}
+.vprops dt{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:4px}
+.vprops dd{margin:0;font-size:14px}
+.vprops .muted{color:var(--muted)}
+.vsec h3{margin:0 0 8px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.vsec .cl-head h3{margin:0}
+.vnotes{white-space:pre-wrap;font-size:14.5px;line-height:1.55;overflow-wrap:anywhere}
+.vnotes a,.vprops a{color:var(--accent)}
+.vcl{display:flex;flex-direction:column;gap:2px;margin-top:8px}
+.vcl-row{display:flex;gap:10px;align-items:flex-start;padding:7px 4px;border-radius:8px;cursor:pointer;font-size:14px}
+.vcl-row:hover{background:var(--sunken)}
+.vcl-row input{width:18px;height:18px;margin:1px 0 0;accent-color:var(--accent);flex:none}
+.vcl-row.done span{text-decoration:line-through;color:var(--muted)}
+.vdone{width:100%;padding:12px;margin-top:4px}
+@media (max-width:520px){.v-acts .btn{padding:8px 10px}.v-title h2{font-size:21px}.vprops{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
 .subrow{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 16px}
 .subchip{display:inline-flex;align-items:center;gap:8px;font:inherit;font-size:13px;font-weight:500;padding:7px 13px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
 .subchip .fsq{width:10px;height:10px;margin:0;box-shadow:none}
@@ -662,6 +783,14 @@ dialog::backdrop{background:rgba(22,20,19,.5)}
   </form>
 </dialog>
 
+<dialog id="vdlg" aria-label="Pendência">
+  <div class="dlg sheet vsheet">
+    <div class="sheet-top"><span class="eyebrow" id="v-eb"></span>
+      <div class="v-acts"><button type="button" class="btn" id="v-edit"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M11 2.5l2.5 2.5L6 12.5H3.5V10z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>Editar</button><button type="button" class="btn danger" id="v-del">Excluir</button><button type="button" class="x" id="v-close" aria-label="Fechar">×</button></div></div>
+    <div id="v-body"></div>
+    <input type="file" id="vattIn" multiple hidden accept=".pdf,.docx,.xlsx,.pptx,.csv,.png,.jpg,.jpeg,.webp,.gif,.txt,.md,.json,.zip">
+  </div>
+</dialog>
 <dialog id="fdlg">
   <form class="dlg" id="fform" novalidate>
     <h2 id="fd-title">Nova pasta</h2>
@@ -728,7 +857,7 @@ const extOf=n=>(String(n).includes('.')?String(n).split('.').pop():'').toLowerCa
 const catOf=f=>(FT[f.ext]||['','','','other'])[3];
 const DLSVG='<svg width="17" height="17" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 2.5v9M5.5 8 9 11.5 12.5 8M3 13.5v2h12v-2"/></svg>';
 const UPSVG='<svg width="22" height="22" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 12V3M5.5 6.5 9 3l3.5 3.5M3 12.5v2.5h12v-2.5"/></svg>';
-let view='tasks';let calMode='day';let cursor=todayStr();let doneLimit=15;let curFolder='';let taskGroup='prazo';let showFolderDone=false;let folderTab='todo',folderDay='';try{folderTab=localStorage.getItem('oncourt.ftab')||'todo'}catch(e){}
+let view='tasks';let calMode='day';let cursor=todayStr();let doneLimit=5;let tgOpen=new Set();try{tgOpen=new Set(JSON.parse(localStorage.getItem('oncourt.tgopen')||'[]'))}catch(e){}let curFolder='';let taskGroup='prazo';let showFolderDone=false;let folderTab='board',folderDay='';try{folderTab=localStorage.getItem('oncourt.ftab')==='day'?'day':'board'}catch(e){}
 const DEFAULT_FOLDERS=[['produto','App',2],['parcerias','Parcerias',1],['marketing','Marketing',4],['financeiro','Financeiro',3],['operacao','Operação',5]];
 let noteGroup='pasta';try{noteGroup=localStorage.getItem('oncourt.v9ng')||'pasta'}catch(e){}
 const curWeekStr=()=>ymd(weekStart(new Date()));
@@ -865,7 +994,7 @@ function openApp(){
   setTimeout(openFromLink,900);
 }
 function openFromLink(){try{const u=new URL(location.href),id=u.searchParams.get('item');if(!id)return;u.searchParams.delete('item');history.replaceState(null,'',u.pathname+u.search+u.hash);const it=items.get(id);if(it)openEditor(it)}catch(e){}}
-function lockNow(){try{sessionStorage.removeItem('oncourt.unlock')}catch(e){}closeDrawer();if(dlg.open)dlg.close();if($('#fidlg').open)$('#fidlg').close();if($('#fdlg').open)$('#fdlg').close();$('#sres').hidden=true;$('#q').value='';$('#toasts').innerHTML='';showLock(lockRec?'enter':'setup')}
+function lockNow(){try{sessionStorage.removeItem('oncourt.unlock')}catch(e){}closeDrawer();if(vdlg.open)vdlg.close();if(dlg.open)dlg.close();if($('#fidlg').open)$('#fidlg').close();if($('#fdlg').open)$('#fdlg').close();$('#sres').hidden=true;$('#q').value='';$('#toasts').innerHTML='';showLock(lockRec?'enter':'setup')}
 $('#lockForm').addEventListener('submit',async e=>{
   e.preventDefault();const err=m=>{$('#lk-err').textContent=m};
   const pin=$('#lk-pin').value.trim(),conf=$('#lk-conf').value.trim(),cur=$('#lk-cur').value.trim();
@@ -921,6 +1050,9 @@ function occurrences(fromStr,days,filter){
   return out;
 }
 const isHi=i=>i.kind==='task'&&!i.done&&i.priority==='alta';
+const CHEV='<svg class="chev" width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const pgroup=(k,label,list,cls,body)=>{const op=tgOpen.has(k);return `<div class="pg${op?' open':''}"><button class="pg-h ${cls||''}" data-act="tgtoggle" data-k="${k}" aria-expanded="${op}">${CHEV}<span>${label}</span><span class="n">${list.length}</span></button>${op?body():''}</div>`};
+const prioRank=i=>i.priority==='alta'?0:i.priority==='baixa'?2:1;
 const hiFirst=(a,b)=>(isHi(a)?0:1)-(isHi(b)?0:1);
 const tasks=()=>all().filter(i=>i.kind==='task');
 const openTasks=()=>tasks().filter(i=>!i.done);
@@ -954,6 +1086,7 @@ $('#scrim').addEventListener('click',closeDrawer);
 /* ---------- Renderização ---------- */
 function render(){
   if(!unlocked)return;
+  if(vdlg.open)renderViewer();
   renderNav();renderHeading();renderBell();
   if(view==='folder'&&foldersLoaded&&!folders.has(curFolder)){view='tasks';renderQuick()}
   $('#nav').hidden=view!=='cal'&&view!=='dash'&&view!=='resumo';
@@ -994,7 +1127,7 @@ function renderQuick(){
   if(view==='tasks')q.innerHTML='';
   else if(view==='dash')q.innerHTML=`<section class="hello"><h2>Olá, Guilherme Távora</h2></section>`;
   else if(view==='notes')q.innerHTML=nForm(1);
-  else if(view==='files')q.innerHTML=`<div class="drop" id="drop"><span class="ico">${UPSVG}</span><div class="txt"><b>Arraste arquivos para cá</b><span class="small">PDF, imagens e CSV até 20 MB · Word, Excel e PowerPoint até 10 MB</span></div>
+  else if(view==='files')q.innerHTML=`<div class="drop" id="drop"><span class="ico">${UPSVG}</span><div class="txt"><b>Arraste arquivos para cá</b><span class="small">PDF, Word, Excel, PowerPoint, imagens e CSV · até 50 MB cada</span></div>
     <div class="r"><select id="upFolder" aria-label="Pasta dos arquivos">${folderOpts(lastFolder)}</select><label class="btn primary" for="fileIn" data-act="pickfile">Escolher arquivos</label></div></div>`;
   else if(view==='folder')q.innerHTML='';
   else q.innerHTML='';
@@ -1008,6 +1141,8 @@ function metaHtml(i,o={}){
   if(i.kind==='event'&&i.place)p.push(`<span>${esc(i.place)}</span>`);
   if(i.repeat&&!(i.kind==='task'&&i.done))p.push(`<span>${LOOP}${REP[i.repeat]}</span>`);
   if(i.kind==='task'&&i.priority==='alta'&&!i.done)p.push('<span class="pill">Alta</span>');
+  if(i.kind==='task'&&i.priority==='baixa'&&!i.done)p.push('<span class="pill low">Baixa</span>');
+  if(i.kind==='task'&&i.status==='doing'&&!i.done)p.push('<span class="pill doing">Em produção</span>');
   if(i.kind==='task'&&i.checklist&&i.checklist.length){const n=i.checklist.length,d=i.checklist.filter(c=>c.done).length;p.push(`<span class="prog" title="Checklist: ${d} de ${n}"><span class="bar"><i style="width:${d/n*100}%"></i></span>${d}/${n}</span>`)}
   if(i.remind!==''&&i.remind!=null&&!i.done)p.push(`<span title="Lembrete">${BELL}${remindLabel(i.remind)}</span>`);
   if(i.kind==='task'){const nf=[...files.values()].filter(f=>f.taskId===i.id).length;if(nf)p.push(`<span title="${nf} arquivo(s)">${CLIPSVG}${nf}</span>`)}
@@ -1025,7 +1160,7 @@ function row(i,o={}){
   const late=o.mode==='due'&&i.kind==='task'&&!i.done&&i.date&&i.date<todayStr();
   return `<div class="it k-${i.kind}${i.done?' is-done':''}${isHi(i)?' prio-alta':''}"${i.kind==='task'?` data-swipe="${i.done?'↺':'✓'}"`:''}><div class="it-time${late?' late-txt':''}">${left}</div><div class="it-mark">${mark}</div>
     <div class="it-col"><button class="it-main" data-act="edit" data-id="${i.id}"><span class="it-title">${esc(i.title)}</span>${metaHtml(i,{time:o.mode==='due',folder:o.folder!==false&&(view!=='folder'||folderOf(i)!==curFolder)&&!(view==='tasks'&&taskGroup==='pasta'&&o.mode==='due')})}</button>
-    ${late?`<div class="snz-row"><button class="snz" data-act="snooze" data-id="${i.id}" data-to="1">Amanhã</button><button class="snz" data-act="snooze" data-id="${i.id}" data-to="mon">Segunda</button><button class="snz" data-act="snooze" data-id="${i.id}" data-to="7">+1 semana</button></div>`:''}</div></div>`;
+</div></div>`;
 }
 
 /* Tarefas */
@@ -1034,10 +1169,20 @@ function viewTasks(){
   const all_=tasks(),open=all_.filter(i=>!i.done),done=all_.filter(i=>i.done);
   const ws=weekStart(now).getTime(),ms=new Date(now.getFullYear(),now.getMonth(),1).getTime();
   const dToday=done.filter(x=>ymd(new Date(doneAt(x)))===t).length,dWeek=done.filter(x=>doneAt(x)>=ws).length,dMonth=done.filter(x=>doneAt(x)>=ms).length;
-  const by=(a,b)=>hiFirst(a,b)||(a.date||'9').localeCompare(b.date||'9')||cmpTime(a,b);
-  const groups=taskGroup==='pasta'
-    ?[...treeList().map(f=>[`<span class="fsq" style="--fc:${fcol(f)}"></span>${fpath(f)}`,open.filter(i=>folderOf(i)===f.id)]),['Sem pasta',open.filter(i=>!folders.has(folderOf(i)))]].filter(g=>g[1].length)
-    :(()=>{const r=open.filter(i=>!isHi(i));return [['Prioridade alta',open.filter(isHi),'hi'],['Atrasadas',r.filter(i=>i.date&&i.date<t),'late'],['Hoje',r.filter(i=>i.date===t)],['Próximas',r.filter(i=>i.date&&i.date>t)],['Sem prazo',r.filter(i=>!i.date)]]})().filter(g=>g[1].length);
+  const by=(a,b)=>prioRank(a)-prioRank(b)||(a.date||'9').localeCompare(b.date||'9')||cmpTime(a,b);
+  const groups=[['Atrasadas',open.filter(i=>i.date&&i.date<t),'late','late'],['Hoje',open.filter(i=>i.date===t),'','today'],['Próximas',open.filter(i=>i.date&&i.date>t),'','next'],['Sem prazo',open.filter(i=>!i.date),'','none']].filter(g=>g[1].length);
+  const rows_=l=>l.sort(by).map(i=>row(i,{mode:'due'})).join('');
+  const byFolderHtml=()=>{let h='';
+    for(const f of topFolders()){const fam=famIds(f.id),famL=open.filter(i=>fam.includes(folderOf(i)));if(!famL.length)continue;
+      const own=famL.filter(i=>folderOf(i)===f.id);
+      const k='f:'+f.id,op=tgOpen.has(k),lt=famL.filter(i=>i.date&&i.date<t).length;
+      h+=`<div class="tg${op?' open':''}"><div class="tg-hw"><button class="tg-h" data-act="tgtoggle" data-k="${k}" aria-expanded="${op}">${CHEV}<span class="fsq" style="--fc:${fcol(f)}"></span><span class="tg-n">${esc(f.name)}</span>${lt?`<span class="tg-late">${lt} ${ss(lt,'atrasada','atrasadas')}</span>`:''}<span class="n">${famL.length}</span></button><button class="tg-open" data-folder="${f.id}" title="Abrir pasta" aria-label="Abrir pasta ${esc(f.name)}">›</button></div>`;
+      if(op){h+=rows_(own);
+        for(const sf of subsOf(f.id)){const l=famL.filter(i=>folderOf(i)===sf.id);if(!l.length)continue;
+          h+=`<button class="tg-s" data-folder="${sf.id}"><span class="fsq" style="--fc:${fcol(sf)}"></span>${esc(sf.name)}<span class="n">${l.length}</span></button>${rows_(l)}`}}
+      h+='</div>'}
+    const none=open.filter(i=>!folders.has(folderOf(i)));if(none.length){const op=tgOpen.has('f:none');h+=`<div class="tg${op?' open':''}"><div class="tg-hw"><button class="tg-h" data-act="tgtoggle" data-k="f:none" aria-expanded="${op}">${CHEV}<span class="tg-n">Sem pasta</span><span class="n">${none.length}</span></button></div>${op?rows_(none):''}</div>`}
+    return h};
   const gseg=`<div class="seg" role="group" aria-label="Agrupar por">${[['prazo','Por prazo'],['pasta','Por pasta']].map(([k,l])=>`<button data-act="tgroup" data-g="${k}" aria-pressed="${taskGroup===k}">${l}</button>`).join('')}</div>`;
   const doneSorted=done.sort((a,b)=>doneAt(b)-doneAt(a));const shown=doneSorted.slice(0,doneLimit);
   const dg=[];for(const i of shown){const k=ymd(new Date(doneAt(i)));let g=dg.find(x=>x[0]===k);if(!g)dg.push(g=[k,[]]);g[1].push(i)}
@@ -1048,11 +1193,12 @@ function viewTasks(){
     <div><b>${dMonth}</b><span>em ${MESES[now.getMonth()]}</span></div></div>
   <div class="two">
     <section class="panel"><div class="panel-h"><h2>A fazer <span class="sub" style="font-family:var(--f-body)">${open.length}</span></h2>${gseg}</div>
-      ${groups.length?groups.map(([n,l,c])=>`<div class="group-label ${c||''}">${n} <span class="n">${l.length}</span></div>${l.sort(by).map(i=>row(i,{mode:'due'})).join('')}`).join('')
-        :`<div class="empty"><strong>Tudo em dia.</strong><span>Toque em Novo para criar uma pendência.</span>${items.size?'':'<button class="btn" data-act="examples">Carregar exemplos</button>'}</div>`}</section>
+      ${!open.length?'':taskGroup==='pasta'?byFolderHtml():groups.map(([n,l,c,key])=>{const k='p:'+key,op=tgOpen.has(k);return `<div class="pg${op?' open':''}"><button class="pg-h ${c||''}" data-act="tgtoggle" data-k="${k}" aria-expanded="${op}">${CHEV}<span>${n}</span><span class="n">${l.length}</span></button>${op?rows_(l):''}</div>`}).join('')}
+      ${open.length?'':
+        `<div class="empty"><strong>Tudo em dia.</strong><span>Toque em Novo para criar uma pendência.</span>${items.size?'':'<button class="btn" data-act="examples">Carregar exemplos</button>'}</div>`}</section>
     <section class="panel"><div class="panel-h"><h2>Concluídas</h2><span class="sub">${done.length} no total</span></div>
       ${dg.length?dg.map(([k,l])=>`<div class="group-label">${dl(k)} <span class="n">${l.length}</span></div>${l.map(i=>row(i,{mode:'done'})).join('')}`).join('')
-        +(doneSorted.length>doneLimit?`<div class="more"><button class="btn" data-act="moredone">Ver mais ${Math.min(15,doneSorted.length-doneLimit)}</button></div>`:'')
+        +(doneSorted.length>doneLimit?`<div class="more"><button class="btn" data-act="moredone">Ver mais ${Math.min(10,doneSorted.length-doneLimit)}</button></div>`:'')
         :'<div class="empty">As pendências que você marcar como feitas aparecem aqui, com o dia e a hora.</div>'}</section>
   </div>`;
 }
@@ -1086,6 +1232,7 @@ function viewDash(){
   const dDone=dayTasks.filter(i=>i.done).length;
   const evs=list.filter(i=>i.kind==='event');const hrs=evs.reduce((s,i)=>{const a=toMin(i.time||'0:0'),e=i.endTime&&i.endTime>i.time?toMin(i.endTime):a+60;return s+(i.time?(e-a)/60:0)},0);
   const ws=weekStart(now).getTime();const wDone=tasks().filter(i=>i.done&&doneAt(i)>=ws).length;
+  const doingL=openTasks().filter(i=>i.status==='doing').sort((a,b)=>(a.doingSince||0)-(b.doingSince||0));
   // próximos dias
   const wk=ymd(weekStart(parse(cursor))),wkEnd=ymd(addDays(parse(wk),6));
   const wtasks=openTasks().filter(i=>i.date&&i.date>=wk&&i.date<=wkEnd&&i.date!==cursor).sort((a,b)=>hiFirst(a,b)||a.date.localeCompare(b.date)||cmpTime(a,b));
@@ -1102,20 +1249,16 @@ function viewDash(){
       <div class="tl-wrap" id="tlwrap"><div class="tl" style="height:${H}px">${rows}${blk}${nowLine}</div></div></section>
     <div class="stack">
       <section class="panel"><div class="panel-h"><h2>Pendências ${isToday?'de hoje':'do dia'}</h2><button class="linkbtn" data-act="alltasks">Ver todas →</button></div>
-        ${late.length?`<div class="group-label late">Atrasadas <span class="n">${late.length}</span></div>${late.map(i=>row(i,{mode:'due'})).join('')}`:''}
-        ${dayTasks.length?`<div class="group-label">${isToday?'Para hoje':'Para este dia'} <span class="n">${dayTasks.length}</span></div>${dayTasks.map(i=>row(i)).join('')}`:(late.length?'':'<div class="empty"><strong>Nada para este dia.</strong><span>Toque em Novo para adicionar uma pendência.</span></div>')}</section>
-      <section class="panel"><div class="panel-h"><h2>Pendências da semana</h2><span class="sub">${weekRange(wk)}</span></div>
-        ${wtasks.length?`<div class="wnotes">${wtasks.map(i=>{const f=folders.get(folderOf(i));return `<button class="wn" data-act="edit" data-id="${i.id}"><i style="--fc:${f?fcol(f):'var(--task)'}"></i><b>${esc(i.title)}</b><span class="small mono">${DIAS3[parse(i.date).getDay()]} ${ddmm(parse(i.date))}</span></button>`}).join('')}</div>`
-          :`<div class="empty"><span>Nenhuma pendência com prazo nesta semana.</span></div>`}</section>
-      <section class="panel"><div class="panel-h"><h2>Próximos dias</h2></div><div class="nextd">
-        ${next.map(([ds,l])=>`<div class="nd"><span class="dl"><b>${DIAS3[parse(ds).getDay()]}</b>${ddmm(parse(ds))}</span>${l.length?`<ul>${l.slice(0,4).map(i=>`<li><button data-act="edit" data-id="${i.id}">${i.time?`<span class="mono">${i.time}</span>`:''}${esc(i.title)}</button></li>`).join('')}${l.length>4?`<li class="none">+${l.length-4}</li>`:''}</ul>`:'<span class="none">Livre</span>'}</div>`).join('')}
-      </div></section>
+        ${late.length?pgroup('d:late','Atrasadas',late,'late',()=>late.map(i=>row(i,{mode:'due'})).join('')):''}
+        ${dayTasks.length?pgroup('d:today',isToday?'Para hoje':'Para este dia',dayTasks,'',()=>dayTasks.map(i=>row(i)).join('')):(late.length?'':'<div class="empty"><strong>Nada para este dia.</strong><span>Toque em Novo para adicionar uma pendência.</span></div>')}</section>
     </div>
   </div></div>`;
 }
 
 /* Resumo da semana */
-const fname=i=>{const f=folders.get(folderOf(i));return f?f.name:'Sem pasta'};
+const fname=i=>{const f=folders.get(folderOf(i));if(!f)return 'Sem pasta';const p=!isTop(f)?folders.get(f.parent):null;return p?p.name+' › '+f.name:f.name};
+const treeIdx=id=>{const k=treeList().findIndex(f=>f.id===id);return k<0?999:k};
+const sinceDays=ms=>ms?Math.max(0,Math.round((parse(todayStr())-parse(ymd(new Date(ms))))/864e5)):null;
 function weekReport(ws){
   const a=parse(ws),aMs=a.getTime(),bMs=addDays(a,7).getTime(),end=ymd(addDays(a,6)),nEnd=ymd(addDays(a,13)),t=todayStr();
   const done=tasks().filter(i=>i.done&&doneAt(i)>=aMs&&doneAt(i)<bMs).sort((x,y)=>doneAt(x)-doneAt(y));
@@ -1125,17 +1268,21 @@ function weekReport(ws){
   const next=openTasks().filter(i=>i.date&&i.date>end&&i.date<=nEnd).sort((x,y)=>x.date.localeCompare(y.date));
   const late=open.filter(i=>i.date<t);
   const fl=[...files.values()].filter(f=>(f.createdAt||0)>=aMs&&(f.createdAt||0)<bMs).sort((x,y)=>x.createdAt-y.createdAt);
-  return {ws,end,done,occ,hours,open,next,late,fl,note:(weekNotes.get(ws)||{}).text||''};
+  const doing=openTasks().filter(i=>i.status==='doing').sort((x,y)=>treeIdx(folderOf(x))-treeIdx(folderOf(y))||(x.date||'9').localeCompare(y.date||'9'));
+  done.sort((x,y)=>treeIdx(folderOf(x))-treeIdx(folderOf(y))||doneAt(x)-doneAt(y));
+  return {ws,end,done,occ,hours,open,next,late,fl,doing,note:(weekNotes.get(ws)||{}).text||''};
 }
 const fmtHrs=h=>String(Math.round(h*10)/10).replace('.',',');
+function cpanel(k,title,sub,body){const op=tgOpen.has(k);return `<section class="panel cp${op?' open':''}"><button class="panel-h cp-h" data-act="tgtoggle" data-k="${k}" aria-expanded="${op}"><h2>${CHEV}${title}</h2><span class="sub">${sub}</span></button>${op?body:''}</section>`}
 function viewResumo(){
   const ws=ymd(weekStart(parse(cursor)));const R=weekReport(ws);const t=todayStr();
   const byFolder=l=>{const g=[];for(const i of l){const k=folderOf(i)&&folders.has(folderOf(i))?folderOf(i):'';let x=g.find(y=>y[0]===k);if(!x)g.push(x=[k,[]]);x[1].push(i)}
-    return g.sort((p,q)=>(folders.get(p[0])?.order??99)-(folders.get(q[0])?.order??99))};
+    return g.sort((p,q)=>treeIdx(p[0])-treeIdx(q[0]))};
   return `<div class="stack">
   <div class="rep-actions"><button class="btn primary" data-act="exppdf">${DLSVG} Baixar relatório em PDF</button><button class="btn" data-act="expxls">${DLSVG} Baixar em Excel</button></div>
   <div class="tiles">
     <div class="tile"><span class="k">Concluídas</span><b>${R.done.length}</b><span class="s">${ss(R.done.length,'pendência','pendências')}</span></div>
+    <div class="tile"><span class="k">Em produção</span><b>${R.doing.length}</b><span class="s">em andamento agora</span></div>
     <div class="tile"><span class="k">Compromissos</span><b>${R.occ.length}</b><span class="s">${R.hours?fmtHrs(R.hours)+' h marcadas':'nenhuma hora marcada'}</span></div>
     <div class="tile${R.open.length?' alert':''}"><span class="k">Ficaram em aberto</span><b>${R.open.length}</b><span class="s">${R.late.length?`${R.late.length} ${ss(R.late.length,'atrasada','atrasadas')} hoje`:'com prazo nesta semana'}</span></div>
     <div class="tile"><span class="k">Arquivos</span><b>${R.fl.length}</b><span class="s">adicionados na semana</span></div>
@@ -1143,21 +1290,17 @@ function viewResumo(){
   <section class="panel"><div class="panel-h"><h2>Seu resumo</h2><span class="sub" id="wnState">${R.note?'salvo':'entra no topo do relatório'}</span></div>
     <div class="panel-b"><textarea id="wnText" class="wn-text" data-w="${ws}" placeholder="Como foi a semana? Principais avanços, o que travou, próximos focos…">${esc(R.note)}</textarea></div></section>
   <div class="two">
-    <section class="panel"><div class="panel-h"><h2>O que foi feito</h2><span class="sub">${R.done.length}</span></div>
-      ${R.done.length?byFolder(R.done).map(([k,l])=>{const f=folders.get(k);return `<div class="group-label">${f?`<span class="fsq" style="--fc:${fcol(f)}"></span>${esc(f.name)}`:'Sem pasta'} <span class="n">${l.length}</span></div>${l.map(i=>row(i,{mode:'done'})).join('')}`}).join('')
-        :'<div class="empty">Nenhuma pendência concluída nesta semana.</div>'}</section>
+    ${cpanel('r:done','O que foi feito',R.done.length,R.done.length?byFolder(R.done).map(([k,l])=>{const f=folders.get(k);return `<div class="group-label">${f?`<span class="fsq" style="--fc:${fcol(f)}"></span>${fpath(f)}`:'Sem pasta'} <span class="n">${l.length}</span></div>${l.map(i=>row(i,{mode:'doneday',folder:false})).join('')}`}).join('')
+        :'<div class="empty">Nenhuma pendência concluída nesta semana.</div>')}
     <div class="stack">
-      <section class="panel"><div class="panel-h"><h2>Ficou em aberto</h2><span class="sub">${R.open.length}</span></div>
-        ${R.open.length?R.open.map(i=>row(i,{mode:'due'})).join(''):'<div class="empty">Nada pendente desta semana.</div>'}</section>
-      <section class="panel"><div class="panel-h"><h2>Próxima semana</h2><span class="sub">${R.next.length}</span></div>
-        ${R.next.length?R.next.map(i=>row(i,{mode:'due'})).join(''):'<div class="empty">Nenhuma pendência com prazo na próxima semana.</div>'}</section>
+      ${cpanel('r:doing','Em produção',R.doing.length+' · agora',R.doing.length?R.doing.map(i=>row(i,{mode:'due'})).join(''):'<div class="empty">Nada em produção no momento.</div>')}
+      ${cpanel('r:open','Ficou em aberto',R.open.length,R.open.length?R.open.map(i=>row(i,{mode:'due'})).join(''):'<div class="empty">Nada pendente desta semana.</div>')}
+      ${cpanel('r:next','Próxima semana',R.next.length,R.next.length?R.next.map(i=>row(i,{mode:'due'})).join(''):'<div class="empty">Nenhuma pendência com prazo na próxima semana.</div>')}
     </div>
   </div>
   <div class="two">
-    <section class="panel"><div class="panel-h"><h2>Compromissos</h2><span class="sub">${R.occ.length}</span></div>
-      ${R.occ.length?R.occ.map(o=>row(o.i,{mode:'due',date:o.date})).join(''):'<div class="empty">Nenhum compromisso nesta semana.</div>'}</section>
-    <section class="panel"><div class="panel-h"><h2>Arquivos adicionados</h2><span class="sub">${R.fl.length}</span></div>
-      ${R.fl.length?R.fl.map(f=>fileRow(f)).join(''):'<div class="empty">Nenhum arquivo adicionado nesta semana.</div>'}</section>
+    ${cpanel('r:occ','Compromissos',R.occ.length,R.occ.length?R.occ.map(o=>row(o.i,{mode:'due',date:o.date})).join(''):'<div class="empty">Nenhum compromisso nesta semana.</div>')}
+    ${cpanel('r:files','Arquivos adicionados',R.fl.length,R.fl.length?R.fl.map(f=>fileRow(f)).join(''):'<div class="empty">Nenhum arquivo adicionado nesta semana.</div>')}
   </div></div>`;
 }
 let wnTimer=null;
@@ -1174,11 +1317,12 @@ const dmyT=ms=>{const d=new Date(ms);return `${pad(d.getDate())}/${pad(d.getMont
 function reportRows(R){
   const t=todayStr();
   return {
-    resumo:[['Semana',`${isoWeek(parse(R.ws))} (${dmy(R.ws)} a ${dmy(R.end)})`],['Pendências concluídas',R.done.length],['Compromissos',R.occ.length],['Horas em compromissos',Math.round(R.hours*10)/10],['Ficaram em aberto',R.open.length],['Atrasadas (hoje)',R.late.length],['Próxima semana',R.next.length],['Arquivos adicionados',R.fl.length]],
+    resumo:[['Semana',`${isoWeek(parse(R.ws))} (${dmy(R.ws)} a ${dmy(R.end)})`],['Pendências concluídas',R.done.length],['Compromissos',R.occ.length],['Horas em compromissos',Math.round(R.hours*10)/10],['Em produção',R.doing.length],['Ficaram em aberto',R.open.length],['Atrasadas (hoje)',R.late.length],['Próxima semana',R.next.length],['Arquivos adicionados',R.fl.length]],
     done:R.done.map(i=>[dmyT(doneAt(i)),i.title,fname(i),i.checklist&&i.checklist.length?`${i.checklist.filter(c=>c.done).length}/${i.checklist.length}`:'',i.notes||'']),
     occ:R.occ.map(o=>[dmy(o.date),o.i.time?(o.i.time+(o.i.endTime?'–'+o.i.endTime:'')):'Dia todo',o.i.title,fname(o.i),o.i.place||'']),
-    open:R.open.map(i=>[dmy(i.date),i.title,fname(i),i.date<t?'Atrasada':'No prazo',i.checklist&&i.checklist.length?`${i.checklist.filter(c=>c.done).length}/${i.checklist.length}`:'']),
+    open:R.open.map(i=>[dmy(i.date),i.title,fname(i),(i.status==='doing'?'Em produção · ':'')+(i.date<t?'Atrasada':'No prazo'),i.checklist&&i.checklist.length?`${i.checklist.filter(c=>c.done).length}/${i.checklist.length}`:'']),
     next:R.next.map(i=>[dmy(i.date),i.title,fname(i)]),
+    doing:R.doing.map(i=>{const d=sinceDays(i.doingSince);return [i.title,fname(i),i.date?dmy(i.date):'Sem prazo',d==null?'':d===0?'hoje':`há ${d} ${d===1?'dia':'dias'}`]}),
     files:R.fl.map(f=>[dmyT(f.createdAt),f.name,folders.get(f.folder)?folders.get(f.folder).name:'Sem pasta',fmtSize(f.size||0)])
   };
 }
@@ -1196,8 +1340,8 @@ async function exportPDF(){
   doc.setFontSize(20);doc.setTextColor(...ink);doc.text(`Resumo da semana ${isoWeek(parse(R.ws))}`,M,62);
   doc.setFont('helvetica','normal');doc.setFontSize(10);doc.setTextColor(...muted);doc.text(`${dmy(R.ws)} a ${dmy(R.end)}  ·  gerado em ${dmyT(Date.now())}`,M,80);
   let y=100;
-  const nums=[['Concluídas',R.done.length],['Compromissos',R.occ.length],['Em aberto',R.open.length],['Arquivos',R.fl.length]];
-  const bw=(W-2*M-30)/4;nums.forEach(([k,v],n)=>{const x=M+n*(bw+10);doc.setDrawColor(227,211,197);doc.roundedRect(x,y,bw,52,6,6,'S');doc.setFontSize(8);doc.setTextColor(...muted);doc.text(k.toUpperCase(),x+10,y+16);doc.setFont('helvetica','bold');doc.setFontSize(18);doc.setTextColor(...ink);doc.text(String(v),x+10,y+40);doc.setFont('helvetica','normal')});
+  const nums=[['Concluídas',R.done.length],['Em produção',R.doing.length],['Em aberto',R.open.length],['Compromissos',R.occ.length],['Arquivos',R.fl.length]];
+  const bw=(W-2*M-40)/5;nums.forEach(([k,v],n)=>{const x=M+n*(bw+10);doc.setDrawColor(227,211,197);doc.roundedRect(x,y,bw,52,6,6,'S');doc.setFontSize(8);doc.setTextColor(...muted);doc.text(k.toUpperCase(),x+10,y+16);doc.setFont('helvetica','bold');doc.setFontSize(18);doc.setTextColor(...ink);doc.text(String(v),x+10,y+40);doc.setFont('helvetica','normal')});
   y+=74;
   if(R.note){doc.setFont('helvetica','bold');doc.setFontSize(12);doc.setTextColor(...ink);doc.text('Resumo',M,y);y+=14;doc.setFont('helvetica','normal');doc.setFontSize(10);doc.setTextColor(...ink);
     const lines=doc.splitTextToSize(R.note,W-2*M);doc.text(lines,M,y);y+=lines.length*13+14}
@@ -1209,6 +1353,7 @@ async function exportPDF(){
     y=doc.lastAutoTable.finalY+24;
   };
   sec('O que foi feito',['Concluída em','Pendência','Pasta','Checklist','Detalhes'],T.done,'Nenhuma pendência concluída nesta semana.');
+  sec('Em produção',['Pendência','Pasta','Prazo','Em produção desde'],T.doing,'Nada em produção no momento.');
   sec('Ficou em aberto',['Prazo','Pendência','Pasta','Situação','Checklist'],T.open,'Nada pendente desta semana.');
   sec('Próxima semana',['Prazo','Pendência','Pasta'],T.next,'Nenhuma pendência com prazo na próxima semana.');
   sec('Compromissos',['Data','Horário','Compromisso','Pasta','Local'],T.occ,'Nenhum compromisso nesta semana.');
@@ -1222,8 +1367,9 @@ async function exportXLS(){
   const X=window.XLSX,wb=X.utils.book_new();
   const add=(name,head,rows,widths)=>{const sh=X.utils.aoa_to_sheet([head,...rows]);sh['!cols']=widths.map(w=>({wch:w}));X.utils.book_append_sheet(wb,sh,name)};
   add('Resumo',['Item','Valor'],[...T.resumo,...(R.note?[['Seu resumo',R.note]]:[])],[24,80]);
-  add('Concluídas',['Concluída em','Pendência','Pasta','Checklist','Detalhes'],T.done,[18,40,16,10,50]);
-  add('Em aberto',['Prazo','Pendência','Pasta','Situação','Checklist'],T.open,[12,40,16,12,10]);
+  add('Concluídas',['Concluída em','Pendência','Pasta','Checklist','Detalhes'],T.done,[18,40,24,10,50]);
+  add('Em produção',['Pendência','Pasta','Prazo','Em produção desde'],T.doing,[40,24,12,16]);
+  add('Em aberto',['Prazo','Pendência','Pasta','Situação','Checklist'],T.open,[12,40,24,22,10]);
   add('Próxima semana',['Prazo','Pendência','Pasta'],T.next,[12,40,16]);
   add('Compromissos',['Data','Horário','Compromisso','Pasta','Local'],T.occ,[12,14,40,16,24]);
   add('Arquivos',['Enviado em','Arquivo','Pasta','Tamanho'],T.files,[18,40,16,10]);
@@ -1270,20 +1416,54 @@ function viewFolder(){
   return `${subrow}<section class="panel fprog"><div class="fp-top"><div class="fp-main"><span class="k">Progresso da pasta</span><b>${pct}%</b><span class="s">${tot?`${done.length} de ${tot} ${ss(tot,'pendência concluída','pendências concluídas')}`:'nenhuma pendência ainda'}</span></div>
     <div class="fp-nums"><span><b>${soon.length}</b>vencem em 7 dias</span><span class="${late.length?'late':''}"><b>${late.length}</b>${ss(late.length,'atrasada','atrasadas')}</span><span><b>${open.length}</b>em aberto</span></div></div>
     <div class="fp-bar" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso da pasta"><i style="width:${pct}%;background:${fcol(f)}"></i></div></section>
-  <div class="two">
-    <section class="panel fpend"><div class="panel-h"><h2>Pendências</h2><div class="seg" role="group" aria-label="Visão">${[['todo','A fazer',open.length],['done','Resolvidas',done.length],['day','Por dia','']].map(([k,l,n])=>`<button data-act="ftab" data-t="${k}" aria-pressed="${folderTab===k}">${l}${n!==''?` <span class="segn">${n}</span>`:''}</button>`).join('')}</div></div>
-      ${folderTab==='todo'?(groups.length?groups.map(([n,l,c])=>`<div class="group-label ${c||''}">${n} <span class="n">${l.length}</span></div>${l.sort(by).map(i=>row(i,{mode:'due'})).join('')}`).join('')
-        :'<div class="empty"><strong>Nada pendente.</strong><span>Toque em Novo para criar uma pendência nesta pasta.</span></div>')
-      :folderTab==='done'?(done.length?doneGroups(done).map(([n,l])=>`<div class="group-label">${n} <span class="n">${l.length}</span></div>${l.map(i=>row(i,{mode:'doneday'})).join('')}`).join('')
-        :'<div class="empty"><strong>Nenhuma resolvida ainda.</strong><span>As pendências que você concluir nesta pasta aparecem aqui.</span></div>')
-      :folderDayView(its,t)}</section>
-    <div class="stack">
-      <section class="panel"><div class="panel-h"><h2>Arquivos</h2><label class="btn" for="fileIn" data-act="pickfile" data-up="${curFolder}">Adicionar</label></div>
-        ${uploadsPanel()}${ffiles.length?ffiles.map(f=>fileRow(f,{folder:false})).join(''):'<div class="empty">Nenhum arquivo nesta pasta. Você também pode arrastar arquivos para esta tela.</div>'}</section>
-      ${evs.length?`<section class="panel"><div class="panel-h"><h2>Próximos compromissos</h2><span class="sub">30 dias</span></div>${evs.map(o=>row(o.i,{mode:'due',date:o.date})).join('')}</section>`:''}
-    </div>
+  <section class="panel fpend"><div class="panel-h"><h2>Pendências</h2><div class="seg" role="group" aria-label="Visão">${[['board','Quadro'],['day','Por dia']].map(([k,l])=>`<button data-act="ftab" data-t="${k}" aria-pressed="${folderTab===k}">${l}</button>`).join('')}</div></div>
+    ${folderTab==='day'?folderDayView(its,t):boardView(its,t)}</section>
+  <div class="fbelow">
+    <section class="panel"><div class="panel-h"><h2>Arquivos</h2><label class="btn" for="fileIn" data-act="pickfile" data-up="${curFolder}">Adicionar</label></div>
+      ${uploadsPanel()}${ffiles.length?ffiles.map(f=>fileRow(f,{folder:false})).join(''):'<div class="empty">Nenhum arquivo nesta pasta. Você também pode arrastar arquivos para esta tela.</div>'}</section>
   </div>`;
 }
+
+const stageOf=i=>i.done?'done':i.status==='doing'?'doing':'todo';
+function setStage(it,st){
+  if(stageOf(it)===st)return;
+  if(st==='done'){toggleTask({...it,status:''});return}
+  const n={...it,status:st==='doing'?'doing':'',updatedAt:Date.now()};if(st==='doing')n.doingSince=Date.now();else delete n.doingSince;
+  if(it.done){n.done=false;delete n.completedAt}
+  store.save(n);
+}
+let boardShowAll=false;
+function card(i,t){
+  const st=stageOf(i),late=!i.done&&i.date&&i.date<t,f=folders.get(folderOf(i));
+  const cl=i.checklist||[],cd=cl.filter(c=>c.done).length;
+  const meta=[];
+  if(i.date&&st!=='done')meta.push(`<span class="kd${late?' late':''}${i.date===t&&!i.done?' today':''}">${i.date===t?'Hoje':shortDate(i.date)}${i.time?' · '+i.time:''}</span>`);
+  if(isHi(i))meta.push('<span class="pill">Alta</span>');
+  if(cl.length)meta.push(`<span class="prog" title="Checklist"><span class="bar"><i style="width:${cd/cl.length*100}%"></i></span>${cd}/${cl.length}</span>`);
+  if(f&&folderOf(i)!==curFolder)meta.push(`<span class="fchip" style="--fc:${fcol(f)}"><i></i>${esc(f.name)}</span>`);
+  if(st==='done')meta.push(`<span class="kd">feita em ${ddmm(new Date(doneAt(i)))}</span>`);
+  const mv=st==='todo'?`<button class="kmv" data-act="stage" data-id="${i.id}" data-st="doing" title="Mover para Em produção">Produção ›</button>`
+    :st==='doing'?`<button class="kmv" data-act="stage" data-id="${i.id}" data-st="todo" title="Voltar para Pendentes">‹ Pendentes</button>`:'';
+  return `<div class="kcard${isHi(i)?' prio-alta':''}${st==='done'?' is-done':''}" draggable="true" data-kid="${i.id}" data-swipe="${i.done?'↺':'✓'}">
+    <button class="chk" data-act="toggle" data-id="${i.id}" aria-pressed="${!!i.done}" aria-label="${i.done?'Reabrir':'Concluir'}">${TICK}</button>
+    <div class="kbody"><button class="it-main" data-act="edit" data-id="${i.id}"><span class="it-title">${esc(i.title)}</span></button>${meta.length?`<div class="kmeta">${meta.join('')}</div>`:''}</div>${mv}</div>`;
+}
+function boardView(its,t){
+  const tasks_=its.filter(i=>i.kind==='task');
+  const by=(a,b)=>hiFirst(a,b)||(a.date||'9').localeCompare(b.date||'9')||cmpTime(a,b);
+  const todo=tasks_.filter(i=>stageOf(i)==='todo').sort(by),doing=tasks_.filter(i=>stageOf(i)==='doing').sort(by),done=tasks_.filter(i=>i.done).sort((a,b)=>doneAt(b)-doneAt(a));
+  const LIM=8,doneShown=boardShowAll?done:done.slice(0,LIM);
+  const col=(k,name,list,empty,extra='')=>`<div class="kcol" data-stage="${k}"><div class="kcol-h"><span class="kdot k-${k}"></span>${name}<span class="n">${list.length}</span></div>
+    <div class="kcol-b">${list.length?list.map(i=>card(i,t)).join(''):`<div class="kempty">${empty}</div>`}${extra}</div></div>`;
+  return `<div class="kanban">${col('todo','Pendentes',todo,'Nada pendente. Toque em Novo.')}${col('doing','Em produção',doing,'Arraste para cá o que está em andamento.')}
+    ${col('done','Resolvidas',doneShown,'O que você concluir aparece aqui.',done.length>LIM?`<button class="toggle-done" data-act="boardall">${boardShowAll?'Mostrar menos':`Ver todas (${done.length})`}</button>`:'')}</div>`;
+}
+/* arrastar cards entre colunas (computador) */
+let dragId=null;
+document.addEventListener('dragstart',e=>{const c=e.target.closest&&e.target.closest('.kcard');if(!c)return;dragId=c.dataset.kid;c.classList.add('dragging');try{e.dataTransfer.setData('text/plain',dragId);e.dataTransfer.effectAllowed='move'}catch(_){}});
+document.addEventListener('dragend',e=>{dragId=null;document.querySelectorAll('.kcard.dragging').forEach(x=>x.classList.remove('dragging'));document.querySelectorAll('.kcol.over').forEach(x=>x.classList.remove('over'))});
+document.addEventListener('dragover',e=>{if(!dragId)return;const c=e.target.closest('.kcol');if(!c)return;e.preventDefault();document.querySelectorAll('.kcol.over').forEach(x=>x!==c&&x.classList.remove('over'));c.classList.add('over')});
+document.addEventListener('drop',e=>{if(!dragId)return;const c=e.target.closest('.kcol');if(!c)return;e.preventDefault();const it=items.get(dragId);dragId=null;c.classList.remove('over');if(it){const st=c.dataset.stage;setStage(it,st);if(st==='done'&&!it.done)toast('Pendência concluída',it.title)}});
 
 function doneGroups(done){
   const t=todayStr(),y=ymd(addDays(new Date(),-1)),ws=weekStart(new Date()).getTime();const g=[['Hoje',[]],['Ontem',[]],['Esta semana',[]],['Antes',[]]];
@@ -1363,6 +1543,7 @@ async function uploadFiles(list,folder,taskId){
   refreshUsage();
 }
 function renderAtt(){
+  if(typeof vdlg!=='undefined'&&vdlg.open)renderViewer();
   const box=$('#att-list');if(!box||typeof editing==='undefined')return;
   const it=editing;const btn=$('#att-btn');
   if(!it||!it.id){box.innerHTML='';btn.hidden=true;$('#att-note').textContent='Salve a pendência para anexar arquivos.';return}
@@ -1425,6 +1606,11 @@ $('#fiform').addEventListener('submit',async e=>{
 });
 
 /* Calendário */
+function monthTags(list){
+  const g=new Map();for(const i of list){if(i.kind==='task'&&i.done)continue;const f=folders.get(folderOf(i));const top=f?(isTop(f)?f:folders.get(f.parent)):null;const k=top?top.id:'';
+    if(!g.has(k))g.set(k,{f:top,n:0});g.get(k).n++}
+  return [...g.values()].sort((a,b)=>treeIdx(a.f?a.f.id:'')-treeIdx(b.f?b.f.id:'')).map(x=>`<span class="mtag" style="--fc:${x.f?fcol(x.f):'var(--muted)'}"><span class="mtn">${x.f?esc(x.f.name):'Sem pasta'}</span><b>+${x.n}</b></span>`).join('');
+}
 function viewCal(){
   const seg=`<div class="seg" role="group" aria-label="Visualização">${[['day','Dia'],['week','Semana'],['month','Mês']].map(([k,l])=>`<button data-act="calmode" data-m="${k}" aria-pressed="${calMode===k}">${l}</button>`).join('')}</div>`;
   if(calMode==='day'){
@@ -1442,7 +1628,7 @@ function viewCal(){
   const d=parse(cursor),first=new Date(d.getFullYear(),d.getMonth(),1),start=weekStart(first),t=todayStr();let cells='';
   for(let k=0;k<42;k++){const c=addDays(start,k),s=ymd(c);if(k===35&&c.getMonth()!==d.getMonth())break;const list=onDate(s);
     cells+=`<button class="mc${c.getMonth()!==d.getMonth()?' out':''}${s===t?' today':''}${s===cursor?' sel':''}" data-act="goday" data-date="${s}" aria-label="${c.getDate()} de ${MESES[c.getMonth()]}, ${list.length} itens"><span class="num">${c.getDate()}</span>
-      ${list.slice(0,3).map(i=>`<span class="ml k-${i.kind}"><i></i>${i.time?`<span class="mono">${i.time}</span> `:''}${esc(i.title)}</span>`).join('')}${list.length>3?`<span class="ml more">+${list.length-3}</span>`:''}<span class="dots">${list.slice(0,5).map(i=>`<i class="k-${i.kind}"></i>`).join('')}</span></button>`}
+      <span class="mtags">${monthTags(list)}</span></button>`}
   return `<section class="panel"><div class="panel-h">${seg}</div><div class="dow">${['seg','ter','qua','qui','sex','sáb','dom'].map(x=>`<div>${x}</div>`).join('')}</div><div class="month">${cells}</div></section>`;
 }
 
@@ -1464,12 +1650,20 @@ function viewMetrics(){
   const perW=weeks.map(w=>{const a=w.getTime(),b=addDays(w,7).getTime();return done.filter(t=>{const x=doneAt(t);return x>=a&&x<b}).length});
   const rate=all_.length?Math.round(done.length/all_.length*100):0;const avg=perW.reduce((a,b)=>a+b,0)/N;
   const best=Math.max(...perW);
+  const lateL=lateTasks(),lc={};for(const i of lateL){const f=folders.get(folderOf(i));const k=f?(isTop(f)?f.name:folders.get(f.parent).name):'Sem pasta';lc[k]=(lc[k]||0)+1}
+  const lateTop=Object.entries(lc).sort((a,b)=>b[1]-a[1])[0]?.[0]||'';
+  const cnt=ids=>{const l=all_.filter(i=>ids.includes(folderOf(i)));const c=l.filter(i=>i.done).length,b=l.filter(i=>!i.done&&i.status==='doing').length;return {a:l.length-c-b,b,c,tot:l.length}};
+  const fb=treeList().map(f=>({f,sub:!isTop(f),...cnt(isTop(f)?famIds(f.id):[f.id])}));
   return `<div class="stack"><div class="tiles">
     <div class="tile"><span class="k">Nesta semana</span><b>${perW[N-1]}</b><span class="s">${ss(perW[N-1],'pendência concluída','pendências concluídas')}</span></div>
     <div class="tile"><span class="k">Média semanal</span><b>${String(Math.round(avg*10)/10).replace('.',',')}</b><span class="s">nas últimas ${N} semanas</span></div>
     <div class="tile"><span class="k">Melhor semana</span><b>${best}</b><span class="s">${best?'semana de '+ddmm(weeks[perW.indexOf(best)]):'ainda sem registro'}</span></div>
     <div class="tile"><span class="k">Conclusão</span><b>${rate}<small>%</small></b><span class="s">${done.length} de ${all_.length} pendências</span></div>
+    <div class="tile${lateL.length?' alert':''}"><span class="k">Atrasadas</span><b>${lateL.length}</b><span class="s">${lateL.length?`mais em ${lateTop}`:'tudo em dia'}</span></div>
   </div>
+  <section class="panel"><div class="panel-h"><h2>Quadro por pasta</h2><span class="klegend"><span><i class="kdot k-todo"></i>Pendentes</span><span><i class="kdot k-doing"></i>Em produção</span><span><i class="kdot k-done"></i>Resolvidas</span></span></div>
+    <div class="fboard">${fb.length?fb.map(r=>`<button class="fbrow${r.sub?' sub':''}" data-folder="${r.f.id}"><span class="fbn"><span class="fsq" style="--fc:${fcol(r.f)}"></span>${esc(r.f.name)}</span>
+      <span class="fbbar">${r.tot?[['todo',r.a],['doing',r.b],['done',r.c]].filter(x=>x[1]).map(([k,v])=>`<i class="k-${k}" style="flex:${v}" title="${v}">${v}</i>`).join(''):'<em>sem pendências</em>'}</span><span class="fbt">${r.tot?Math.round(r.c/r.tot*100)+'%':''}</span></button>`).join(''):'<div class="empty">Crie pastas para ver o quadro.</div>'}</div></section>
   <section class="panel"><div class="panel-h"><h2>Pendências concluídas por semana</h2><span class="sub">a barra em destaque é a semana atual</span></div><div class="panel-b">${barChart(perW,weeks.map(ddmm),N-1)}</div></section></div>`;
 }
 
@@ -1572,19 +1766,20 @@ function spawnNext(it){
 }
 
 /* ---------- Ações ---------- */
-function toggleTask(it){const d=!it.done;const n={...it,done:d,updatedAt:Date.now()};if(d){n.completedAt=Date.now();spawnNext(n)}else delete n.completedAt;store.save(n)}
+function toggleTask(it){const d=!it.done;const n={...it,done:d,status:'',updatedAt:Date.now()};if(d){n.completedAt=Date.now();spawnNext(n)}else delete n.completedAt;store.save(n)}
 function openFolder(id){curFolder=id;showFolderDone=false;folderDay='';try{localStorage.setItem('oncourt.v6folder',id)}catch(e){}setView('folder')}
 function setView(v){if(v==='files')refreshUsage();view=v;try{localStorage.setItem('oncourt.v5view',v)}catch(e){}closeDrawer();renderQuick();render();window.scrollTo({top:0})}
 document.addEventListener('click',e=>{
   const fo=e.target.closest('[data-folder]');if(fo){openFolder(fo.dataset.folder);return}
   const v=e.target.closest('[data-view]');if(v){setView(v.dataset.view);return}
   const b=e.target.closest('[data-act]');if(!b)return;const a=b.dataset.act,id=b.dataset.id;
-  if(a==='edit'){if(!$('#bellpop').hidden)setBell(false);if(items.get(id))openEditor(items.get(id))}
+  if(a==='edit'){if(!$('#bellpop').hidden)setBell(false);if(items.get(id))openViewer(id)}
   else if(a==='toggle'){const it=items.get(id);if(it)toggleTask(it)}
   else if(a==='goday'){cursor=b.dataset.date;calMode='day';try{localStorage.setItem('oncourt.v5cal',calMode)}catch(e){}render()}
   else if(a==='calmode'){calMode=b.dataset.m;try{localStorage.setItem('oncourt.v5cal',calMode)}catch(e){}render()}
   else if(a==='qcl'){const box=$('#qcl');box.hidden=!box.hidden;b.textContent=box.hidden?'+ Checklist':'− Checklist';b.setAttribute('aria-expanded',String(!box.hidden));if(!box.hidden)$('#qtItems').focus()}
-  else if(a==='moredone'){doneLimit+=15;render()}
+  else if(a==='tgtoggle'){const k=b.dataset.k;tgOpen.has(k)?tgOpen.delete(k):tgOpen.add(k);try{localStorage.setItem('oncourt.tgopen',JSON.stringify([...tgOpen]))}catch(e){}render()}
+  else if(a==='moredone'){doneLimit+=10;render()}
   else if(a==='newat'){openEditor(null,{kind:'event',date:cursor,time:b.dataset.time})}
   else if(a==='alltasks'){setView('tasks')}
   else if(a==='pickfile'){pendingFolder=b.dataset.up!==undefined?b.dataset.up:($('#upFolder')?$('#upFolder').value:'');if(view==='files')rememberFolder(pendingFolder)}
@@ -1601,6 +1796,8 @@ document.addEventListener('click',e=>{
   else if(a==='newweeknote'){openEditor(null,{kind:'note',week:b.dataset.w})}
   else if(a==='tgroup'){taskGroup=b.dataset.g;try{localStorage.setItem('oncourt.v6group',taskGroup)}catch(e){}render()}
   else if(a==='fdone'){showFolderDone=!showFolderDone;render()}
+  else if(a==='stage'){const it=items.get(id);if(it)setStage(it,b.dataset.st)}
+  else if(a==='boardall'){boardShowAll=!boardShowAll;render()}
   else if(a==='ftab'){folderTab=b.dataset.t;try{localStorage.setItem('oncourt.ftab',folderTab)}catch(e){}render()}
   else if(a==='fday'){folderDay=b.dataset.d;folderTab='day';render()}
   else if(a==='newfolder'){closeDrawer();openFolderDlg(null)}
@@ -1639,9 +1836,63 @@ document.addEventListener('keydown',e=>{
 document.addEventListener('input',e=>{if(e.target.id==='qtItems'||e.target.id==='qtDesc'){const t=e.target;t.style.height='auto';t.style.height=t.scrollHeight+'px'}});
 $('#fab').addEventListener('click',()=>openEditor(null,{kind:view==='cal'?'event':'task'}));
 
+/* ---------- Ficha (visualização) ---------- */
+const vdlg=$('#vdlg');let viewId=null,viewReturn=null;
+const autolink=t=>esc(t).replace(/(https?:\/\/[^\s<]+[^\s<.,;:!?)\]'"])/g,'<a href="$1" target="_blank" rel="noopener">$1</a>');
+function openViewer(id){viewId=id;const d=$('#v-del');d.classList.remove('armed');d.textContent='Excluir';renderViewer();try{if(!vdlg.open)vdlg.showModal()}catch(e){vdlg.setAttribute('open','')}}
+function renderViewer(){
+  const i=items.get(viewId);if(!i){if(vdlg.open)vdlg.close();return}
+  const t=todayStr(),isTask=i.kind==='task',f=folders.get(folderOf(i)),late=isTask&&!i.done&&i.date&&i.date<t;
+  $('#v-eb').textContent=isTask?'Pendência':'Compromisso';
+  const fmtD=s=>{const d=parse(s);return `${DIAS[d.getDay()].replace(/^./,c=>c.toUpperCase())}, ${ddmm(d)}/${d.getFullYear()}`};
+  let status='';
+  if(isTask&&i.done){const d=new Date(doneAt(i));status=`<span class="vst ok">Concluída em ${ddmm(d)} às ${hhmm(d)}</span>`}
+  else if(late){const n=Math.round((parse(t)-parse(i.date))/864e5);status=`<span class="vst late">Atrasada há ${n} ${ss(n,'dia','dias')}</span>`}
+  if(isTask&&!i.done&&i.status==='doing')status=`<span class="vst doing">Em produção</span> `+status;
+  else if(i.date===t)status=`<span class="vst today">${isTask?'Vence hoje':'Hoje'}</span>`;
+  else if(i.date===ymd(addDays(new Date(),1)))status=`<span class="vst">${isTask?'Vence amanhã':'Amanhã'}</span>`;
+  const props=[];
+  if(f)props.push(['Pasta',`<span class="fchip" style="--fc:${fcol(f)}"><i></i>${fpath(f)}</span>`]);
+  props.push([isTask?'Prazo':'Data',i.date?fmtD(i.date):'<span class="muted">Sem prazo</span>']);
+  if(i.time)props.push(['Horário',`<span class="mono">${i.time}${i.endTime?' – '+i.endTime:''}</span>`]);
+  if(isTask)props.push(['Prioridade',i.priority==='alta'?'<span class="pill">Alta</span>':i.priority==='baixa'?'Baixa':'Normal']);
+  if(i.remind!=null&&i.remind!=='')props.push(['Lembrete',`${remindLabel(Number(i.remind))}${Number(i.remind)?' antes':''}`]);
+  if(i.repeat)props.push(['Repete',`${REP[i.repeat]}${i.until?' até '+ddmm(parse(i.until)):''}`]);
+  if(!isTask&&i.place)props.push(['Local',autolink(i.place)]);
+  const clist=i.checklist||[],cd=clist.filter(c=>c.done).length;
+  const att=[...files.values()].filter(x=>x.taskId===i.id).sort((a,b)=>(a.createdAt||0)-(b.createdAt||0)),ups=uploads.filter(u=>u.taskId===i.id&&u.pct<100);
+  const c=i.createdAt?new Date(i.createdAt):null;
+  $('#v-body').innerHTML=`<div class="v-title">${isTask?`<button type="button" class="chk big" data-vact="done" aria-pressed="${!!i.done}" aria-label="${i.done?'Reabrir':'Concluir'}">${TICK}</button>`:'<span class="dot big"></span>'}<h2 class="${i.done?'done':''}">${esc(i.title)}</h2></div>
+    ${status?`<div>${status}</div>`:''}
+    ${late?`<div class="snooze"><span class="small">Adiar para</span><button type="button" class="btn" data-vsnz="1">Amanhã</button><button type="button" class="btn" data-vsnz="mon">Segunda</button><button type="button" class="btn" data-vsnz="7">+1 semana</button></div>`:''}
+    <dl class="vprops">${props.map(([k,v])=>`<div><dt>${k}</dt><dd>${v}</dd></div>`).join('')}</dl>
+    ${i.notes?`<section class="vsec"><h3>Descrição</h3><div class="vnotes">${autolink(i.notes)}</div></section>`:''}
+    ${isTask&&clist.length?`<section class="vsec"><div class="cl-head"><h3>Checklist</h3><span class="small">${cd} de ${clist.length}</span></div><div class="clbar"><i style="width:${cd/clist.length*100}%"></i></div>
+      <div class="vcl">${clist.map((x,k)=>`<label class="vcl-row${x.done?' done':''}"><input type="checkbox" data-vcl="${k}" ${x.done?'checked':''}><span>${esc(x.text||x.t||'')}</span></label>`).join('')}</div></section>`:''}
+    ${isTask?`<section class="vsec"><div class="cl-head"><h3>Arquivos</h3>${store.mode==='db'?'<label class="btn" for="vattIn">Anexar</label>':''}</div>
+      ${att.length||ups.length?att.map(x=>{const sp=FT[x.ext]||[(x.ext||'?').toUpperCase().slice(0,4),'db','','other'];return `<div class="att"><span class="ftype" style="--tc:${FCAT[sp[3]][1]}">${esc(sp[0])}</span><span style="min-width:0"><b>${esc(x.name)}</b><span class="small">${fmtSize(x.size||0)}</span></span><span class="acts"><button type="button" class="btn icon" data-act="fdl" data-fid="${x.id}" title="Baixar" aria-label="Baixar ${esc(x.name)}">${DLSVG}</button></span></div>`}).join('')
+        +ups.map(u=>`<div class="att"><span class="ftype">…</span><span style="min-width:0"><b>${esc(u.name)}</b>${u.err?`<span class="er">${esc(u.err)}</span>`:`<span class="bar"><i style="width:${u.pct}%"></i></span>`}</span><span></span></div>`).join('')
+        :'<span class="small">Nenhum arquivo anexado.</span>'}</section>`:''}
+    ${c?`<div class="meta-line">Criada em ${ddmm(c)}/${c.getFullYear()}${i.updatedAt&&i.updatedAt-i.createdAt>60000?' · editada em '+ddmm(new Date(i.updatedAt))+' às '+hhmm(new Date(i.updatedAt)):''}</div>`:''}
+    ${isTask?`<div class="vfoot">${!i.done?`<button type="button" class="btn" data-vact="stage">${i.status==='doing'?'‹ Voltar para Pendentes':'Mover para Em produção'}</button>`:''}<button type="button" class="btn ${i.done?'':'primary'} vdone" data-vact="done">${i.done?'Reabrir pendência':'Marcar como concluída'}</button></div>`:''}`;
+}
+$('#v-close').addEventListener('click',()=>vdlg.close());
+$('#v-edit').addEventListener('click',()=>{const i=items.get(viewId);if(!i)return;viewReturn=viewId;vdlg.close();openEditor(i)});
+$('#v-del').addEventListener('click',e=>{const b=e.currentTarget;
+  if(!b.classList.contains('armed')){b.classList.add('armed');b.textContent='Confirmar exclusão';setTimeout(()=>{b.classList.remove('armed');b.textContent='Excluir'},4000);return}
+  const i=items.get(viewId);vdlg.close();if(i){store.remove(i.id);toast('Excluída',i.title)}});
+$('#v-body').addEventListener('click',e=>{const i=items.get(viewId);if(!i)return;
+  const d=e.target.closest('[data-vact="done"]');if(d){toggleTask(i);if(!i.done)toast('Pendência concluída',i.title);return}
+  const z=e.target.closest('[data-vsnz]');if(z){snooze(i,z.dataset.vsnz);return}
+  if(e.target.closest('[data-vact="stage"]')){setStage(i,i.status==='doing'?'todo':'doing');return}});
+$('#v-body').addEventListener('change',e=>{const k=e.target.dataset.vcl;if(k==null)return;const i=items.get(viewId);if(!i)return;
+  const cl2=(i.checklist||[]).map((x,n)=>n===+k?{...x,done:e.target.checked}:x);store.save({...i,checklist:cl2,updatedAt:Date.now()})});
+$('#vattIn').addEventListener('change',e=>{const fl=[...e.target.files];e.target.value='';const i=items.get(viewId);if(i)uploadFiles(fl,folderOf(i)||'',i.id)});
+dlg.addEventListener('close',()=>{const r=viewReturn;viewReturn=null;if(r&&items.has(r))setTimeout(()=>openViewer(r),0)});
+
 /* ---------- Deslizar para concluir (celular) ---------- */
 (function(){let el=null,id=null,sx=0,sy=0,dx=0,active=false,swallow=0;const LIM=90;
-  document.addEventListener('touchstart',e=>{if(e.touches.length>1){el=null;return}const it=e.target.closest('.it[data-swipe]');if(!it){el=null;return}
+  document.addEventListener('touchstart',e=>{if(e.touches.length>1){el=null;return}const it=e.target.closest('.it[data-swipe],.kcard[data-swipe]');if(!it){el=null;return}
     const b=it.querySelector('[data-act=toggle]');if(!b){el=null;return}el=it;id=b.dataset.id;sx=e.touches[0].clientX;sy=e.touches[0].clientY;dx=0;active=false},{passive:true});
   document.addEventListener('touchmove',e=>{if(!el)return;const x=e.touches[0].clientX-sx,y=e.touches[0].clientY-sy;
     if(!active){if(Math.abs(y)>10&&Math.abs(y)>Math.abs(x)){el=null;return}if(x>14&&x>Math.abs(y)*1.5){active=true;el.classList.add('swiping')}else return}
@@ -1650,7 +1901,7 @@ $('#fab').addEventListener('click',()=>openEditor(null,{kind:view==='cal'?'event
     it.classList.remove('swiping','swipe-ok');it.style.setProperty('--sx','0px');
     if(ok){const t=items.get(id);if(t){if(navigator.vibrate)try{navigator.vibrate(12)}catch(e){}toggleTask(t);if(!t.done)toast('Pendência concluída',t.title)}}};
   document.addEventListener('touchend',end,{passive:true});document.addEventListener('touchcancel',end,{passive:true});
-  document.addEventListener('click',e=>{if(Date.now()-swallow<450&&e.target.closest('.it')){e.preventDefault();e.stopPropagation()}},true);
+  document.addEventListener('click',e=>{if(Date.now()-swallow<450&&e.target.closest('.it,.kcard')){e.preventDefault();e.stopPropagation()}},true);
 })();
 
 /* ---------- Pastas: criar, editar, excluir ---------- */

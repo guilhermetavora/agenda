@@ -25,11 +25,54 @@ Agenda interna de uso pessoal do Guilherme Távora para a OnCourt (marketplace d
 ## Modelo de dados (tabela `docs`)
 - Uma linha por documento: `user_id`, `col`, `id`, `data` (jsonb) e `ts` (ms).
 - Coleções:
-  - `items`: pendências e compromissos (`kind`: `task` ou `event`);
-  - `folders`: App, Parcerias, Marketing, Financeiro, Operação;
+  - `items`: pendências e compromissos (`kind`: `task` ou `event`).
+    - Campos de pendência: `title`, `notes`, `date`, `time`, `priority` (`alta`, `media` ou `baixa`), `remind`, `repeat`, `checklist` e `folder`.
+    - Etapa: `done`/`completedAt` para resolvida; `status:'doing'` + `doingSince` para em produção.
+  - `folders`: App, Parcerias, Marketing, Financeiro, Operação.
+    - Uma subpasta tem `parent` (só um nível).
+    - O campo `order` ordena; as subpastas usam a faixa de 1000 em diante.
   - `files`: metadados dos arquivos (`assetId` aponta para o Storage em `arquivos/<user_id>/<assetId>`);
   - `weeknotes`;
   - `settings/lock`: PIN com hash PBKDF2.
+
+## Telas (estado atual)
+- **Menu lateral:**
+  - pastas principais, com as subpastas escondidas (só aparecem com a pasta aberta);
+  - no rodapé, Ativar notificações, Trocar PIN, Bloquear e Sair da conta.
+- **Dashboard:**
+  - 4 números;
+  - Agenda do dia, hora a hora;
+  - Pendências de hoje, com os grupos Atrasadas e Para hoje recolhíveis.
+  - Não tem "Em produção", "Pendências da semana" nem "Próximos dias" (o Guilherme vê no Calendário).
+- **Pendências:**
+  - Por prazo: Atrasadas, Hoje, Próximas e Sem prazo, ordenadas por prioridade (alta → normal → baixa) e depois pela data.
+  - Por pasta: pasta em título grande, subpasta em título menor.
+  - Todos os grupos começam recolhidos; o estado fica em `localStorage` (`oncourt.tgopen`).
+  - Concluídas mostra as 5 últimas, com "Ver mais".
+  - Sem botões de adiar na lista (adiar fica só na ficha).
+- **Calendário:** Dia e Semana; no Mês, etiquetas por pasta principal com a contagem ("App +3").
+- **Arquivos:** até 50 MB cada, no Storage do Supabase.
+- **Métricas:**
+  - cartões;
+  - Quadro por pasta (barra pendentes / em produção / resolvidas);
+  - concluídas por semana.
+- **Resumo da semana:**
+  - seções recolhíveis, com Em produção e o feito agrupado por pasta › subpasta;
+  - exporta PDF e Excel.
+- **Pasta:**
+  - barra de subpastas: Tudo, cada subpasta, + Subpasta e Organizar (ordem ↑↓ e excluir; ao excluir, os itens vão para a pasta principal);
+  - progresso;
+  - Pendências em Quadro (Pendentes / Em produção / Resolvidas; arrasta no PC e "Produção ›" no card) ou Por dia (faixa da semana);
+  - Arquivos embaixo, sem "Próximos compromissos".
+- **Ficha da pendência:**
+  - abre só para ver, com Editar e Excluir no topo;
+  - na própria ficha dá para marcar o checklist, concluir, mover para produção, adiar e anexar.
+  - Criar é só pelo botão **Novo**.
+- **Celular:** deslizar a pendência para a direita conclui.
+
+## Fluxo de trabalho
+- Mostrar prévias (prints com dados de exemplo) antes de implementar mudanças grandes; propor ideias e esperar aprovação.
+- Entregar os arquivos alterados para ele subir no GitHub (Add file → Upload files). Cuidado: o navegador renomeia para `index_1.html`, e o nome precisa ser exatamente `index.html`.
 
 ## Identidade visual
 - Paleta (tokens em `:root`, com modo escuro):
@@ -42,7 +85,7 @@ Agenda interna de uso pessoal do Guilherme Távora para a OnCourt (marketplace d
 - Estilo simples e com espaço. Saudação "Olá, Guilherme Távora" pequena e em preto. Sino só contornado.
 
 ## Preferências do Guilherme
-- Quer simples: só **pendências** (com título, descrição, checklist, prazo, horário em horas cheias, prioridade, repetição, anexos), sem notas separadas.
+- Quer simples, com pouca informação na tela e grupos recolhidos. Só **pendências** (com título, descrição, checklist, prazo, horário em horas cheias, prioridade, repetição, anexos), sem notas separadas.
 - Não quer: CRM (já tem um hub), diário de decisões, revisão semanal, contagem regressiva de lançamento, texto descritivo sob a saudação, arcos decorativos.
 - Lembretes: no app aberto, aviso na tela e som. Com o app fechado, **push** (ver abaixo).
 

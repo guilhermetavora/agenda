@@ -44,4 +44,14 @@ Agenda interna de uso pessoal do Guilherme Távora para a OnCourt (marketplace d
 ## Preferências do Guilherme
 - Quer simples: só **pendências** (com título, descrição, checklist, prazo, horário em horas cheias, prioridade, repetição, anexos), sem notas separadas.
 - Não quer: CRM (já tem um hub), diário de decisões, revisão semanal, contagem regressiva de lançamento, texto descritivo sob a saudação, arcos decorativos.
-- Lembretes só funcionam com o app aberto. Notificação push foi tentada e abandonada.
+- Lembretes: no app aberto, aviso na tela e som. Com o app fechado, **push** (ver abaixo).
+
+## Notificações push
+- O aparelho se inscreve pelo botão "Ativar notificações" (`oncourtEnablePush` em `supa-shim.js`). A inscrição vai para a tabela `push_subs`. A chave pública VAPID está em `config.js`.
+- A Edge Function `lembretes` roda no Supabase. O código fica em `supabase/lembretes.ts` e **NÃO vai para o GitHub**, porque contém a chave privada VAPID.
+  - É chamada a cada minuto pelo pg_cron (job `oncourt-lembretes`, criado por `supabase/push-setup.sql`).
+  - Calcula os lembretes vencidos com a mesma lógica do app (fuso de Brasília, até 30 min de atraso).
+  - Evita repetir pela tabela `push_sent` e envia via web-push.
+  - Com `{test:true}` e o JWT do usuário, manda uma notificação de teste.
+- `sw.js` mostra a notificação (evento `push`) e abre o app ao tocar.
+- No iPhone, o push só funciona com o app adicionado à tela de início (iOS 16.4 ou mais novo).

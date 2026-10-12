@@ -3,4 +3,5 @@
 window.ONCOURT_CONFIG = {
   supabaseUrl: 'https://pfxrqsxujbcxnzscwchh.supabase.co',
   supabaseAnonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBmeHJxc3h1amJjeG56c2N3Y2hoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE3NjY4MzAsImV4cCI6MjEwNzM0MjgzMH0.szxIMC1kSWKBRiRilVxpo3GE2RJlmCstD6ZpnzCC-II'
+  ,vapidPublicKey: 'BCSeLkChR3hkYJS2M3NMgPSk5GkUb9gMXX-cm3rPt6s1BxLmXWpTKHYTCrNX6QqBX00-XFyIo0afMEj54rp5fmM'
 };

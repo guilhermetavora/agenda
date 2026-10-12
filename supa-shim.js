@@ -117,6 +117,44 @@
     return true;
   })();
 
+  /* ---------- Notificações push ---------- */
+  function b64u(s) {
+    var p = '='.repeat((4 - s.length % 4) % 4), b = atob((s + p).replace(/-/g, '+').replace(/_/g, '/'));
+    var u = new Uint8Array(b.length); for (var i = 0; i < b.length; i++) u[i] = b.charCodeAt(i); return u;
+  }
+  window.oncourtPushSupported = function () {
+    return !!(cfg.vapidPublicKey && 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window && location.protocol === 'https:');
+  };
+  window.__pushOn = false;
+  // pede permissão (se preciso), inscreve este aparelho e guarda no Supabase
+  window.oncourtEnablePush = async function (silent) {
+    if (!window.oncourtPushSupported()) return 'unsupported';
+    await ready;
+    if (Notification.permission === 'default' && !silent) { try { await Notification.requestPermission(); } catch (e) {} }
+    if (Notification.permission !== 'granted') return Notification.permission === 'denied' ? 'denied' : 'default';
+    try {
+      var reg = await navigator.serviceWorker.register('sw.js');
+      reg = await navigator.serviceWorker.ready;
+      var sub = await reg.pushManager.getSubscription();
+      if (!sub) sub = await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: b64u(cfg.vapidPublicKey) });
+      var j = sub.toJSON();
+      var r = await sb.from('push_subs').upsert({ endpoint: j.endpoint, user_id: uid, p256dh: j.keys.p256dh, auth: j.keys.auth, ua: navigator.userAgent.slice(0, 200) }, { onConflict: 'endpoint' });
+      if (r.error) { console.warn(r.error); return 'error'; }
+      window.__pushOn = true; return 'ok';
+    } catch (e) { console.warn(e); return 'error'; }
+  };
+  window.oncourtTestPush = async function () {
+    await ready;
+    var r = await sb.functions.invoke('lembretes', { body: { test: true } });
+    if (r.error) return -1;
+    return (r.data && r.data.sent) || 0;
+  };
+  ready.then(function () {
+    if (window.oncourtPushSupported() && Notification.permission === 'granted') {
+      window.oncourtEnablePush(true).then(function () { if (window.oncourtPushChanged) window.oncourtPushChanged(); });
+    }
+  }).catch(function () {});
+
   window.oncourtSignOut = function () {
     if (!sb) return;
     try { sessionStorage.removeItem('oncourt.unlock'); } catch (e) {}

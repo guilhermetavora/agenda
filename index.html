@@ -20,7 +20,39 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Poppins:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap">
 <style>
 [hidden]{display:none!important}
+.segn{font-family:var(--f-mono);font-size:11px;opacity:.7;margin-left:2px}
+.fpend .panel-h .seg button{white-space:nowrap}
+.dnav{display:flex;align-items:center;gap:8px;padding:14px 20px 4px}
+.dnav .dlabel{flex:1;display:flex;flex-direction:column;line-height:1.2;min-width:0}
+.dnav .dlabel b{font-family:var(--f-display);font-size:18px}
+.dnav .dlabel span{font-size:12px;color:var(--muted)}
+.dstrip{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;padding:10px 20px 6px}
+.dchip{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 2px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;font:inherit;min-width:0}
+.dchip .dw{font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.dchip b{font-size:16px;font-weight:600}
+.dchip .dn{font-family:var(--f-mono);font-size:11px;color:var(--accent);min-height:14px}
+.dchip .dn.late{color:var(--danger)}
+.dchip.today b{color:var(--accent)}
+.dchip.on{background:var(--hl);border-color:var(--accent)}
+.dchip:hover{border-color:var(--accent)}
+@media (max-width:520px){.dstrip{gap:4px;padding:10px 12px 6px}.dnav{padding:12px 14px 2px}.fpend .panel-h .seg{width:100%}.fpend .panel-h .seg button{flex:1}}
+
 .arc{display:none!important}
+.subrow{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 16px}
+.subchip{display:inline-flex;align-items:center;gap:8px;font:inherit;font-size:13px;font-weight:500;padding:7px 13px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.subchip .fsq{width:10px;height:10px;margin:0;box-shadow:none}
+.subchip.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.subchip.add{border-style:dashed;color:var(--accent);font-weight:600}
+.subchip:hover{border-color:var(--accent)}
+.nv.fv.sub{padding-left:30px;font-size:13px}
+.nv.fv.sub .fsq{width:9px;height:9px}
+.panel{overflow-x:clip}
+.it[data-swipe]{position:relative;touch-action:pan-y;transition:transform .22s ease,box-shadow .22s ease}
+.it.swiping{transition:none;transform:translateX(var(--sx));box-shadow:calc(-1 * var(--sx)) 0 0 0 var(--sunken)}
+.it.swiping.swipe-ok{box-shadow:calc(-1 * var(--sx)) 0 0 0 var(--note)}
+.it.swiping::after{content:attr(data-swipe);position:absolute;top:50%;left:calc(-1 * var(--sx) + 18px);transform:translateY(-50%);font-size:20px;font-weight:700;color:var(--muted)}
+.it.swiping.swipe-ok::after{color:#fff}
+
 /* Layout: identidade OnCourt, versão enxuta. Menu lateral (fixo no computador, deslizante no celular) com Dashboard, Calendário, Arquivos e Métricas. Tela de PIN antes de abrir. */
 :root{
   --paper:#FFF8F3; --surface:#FFFDFB; --sunken:#F4E6DA; --ink:#211E1C; --muted:#6F625A; --line:#E3D3C5;
@@ -634,6 +666,7 @@ dialog::backdrop{background:rgba(22,20,19,.5)}
   <form class="dlg" id="fform" novalidate>
     <h2 id="fd-title">Nova pasta</h2>
     <div class="field"><label for="fd-name">Nome da pasta</label><input id="fd-name" maxlength="40" autocomplete="off" placeholder="Ex.: Parcerias"></div>
+    <div class="field" id="fd-par-w"><label for="fd-par">Dentro de</label><select id="fd-par"></select></div>
     <div class="field"><label>Cor</label><div class="swatches" id="fd-colors"></div></div>
     <div class="err" id="fd-err"></div>
     <div class="dlg-foot">
@@ -695,7 +728,7 @@ const extOf=n=>(String(n).includes('.')?String(n).split('.').pop():'').toLowerCa
 const catOf=f=>(FT[f.ext]||['','','','other'])[3];
 const DLSVG='<svg width="17" height="17" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 2.5v9M5.5 8 9 11.5 12.5 8M3 13.5v2h12v-2"/></svg>';
 const UPSVG='<svg width="22" height="22" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 12V3M5.5 6.5 9 3l3.5 3.5M3 12.5v2.5h12v-2.5"/></svg>';
-let view='tasks';let calMode='day';let cursor=todayStr();let doneLimit=15;let curFolder='';let taskGroup='prazo';let showFolderDone=false;
+let view='tasks';let calMode='day';let cursor=todayStr();let doneLimit=15;let curFolder='';let taskGroup='prazo';let showFolderDone=false;let folderTab='todo',folderDay='';try{folderTab=localStorage.getItem('oncourt.ftab')||'todo'}catch(e){}
 const DEFAULT_FOLDERS=[['produto','App',2],['parcerias','Parcerias',1],['marketing','Marketing',4],['financeiro','Financeiro',3],['operacao','Operação',5]];
 let noteGroup='pasta';try{noteGroup=localStorage.getItem('oncourt.v9ng')||'pasta'}catch(e){}
 const curWeekStr=()=>ymd(weekStart(new Date()));
@@ -708,7 +741,13 @@ function weekOpts(sel){const c=curWeekStr();const ws=[-1,0,1,2,3].map(n=>wkAdd(c
 const folderOf=i=>i.folder!==undefined?i.folder:(i.area||'');
 const folderList=()=>[...folders.values()].sort((a,b)=>(a.order??99)-(b.order??99)||String(a.name).localeCompare(String(b.name)));
 const fcol=f=>`var(--c${(f&&f.color)||1})`;
-const folderOpts=sel=>`<option value="">Sem pasta</option>${folderList().map(f=>`<option value="${f.id}" ${sel===f.id?'selected':''}>${esc(f.name)}</option>`).join('')}`;
+const isTop=f=>!f.parent||!folders.has(f.parent);
+const topFolders=()=>folderList().filter(isTop);
+const subsOf=id=>folderList().filter(f=>f.parent===id);
+const treeList=()=>topFolders().flatMap(f=>[f,...subsOf(f.id)]);
+const famIds=id=>{const f=folders.get(id);return f&&isTop(f)?[id,...subsOf(id).map(x=>x.id)]:[id]};
+const fpath=f=>f?(!isTop(f)?esc(folders.get(f.parent).name)+' › '+esc(f.name):esc(f.name)):'';
+const folderOpts=sel=>`<option value="">Sem pasta</option>${treeList().map(f=>`<option value="${f.id}" ${sel===f.id?'selected':''}>${isTop(f)?'':'\u00a0\u00a0\u00a0↳ '}${esc(f.name)}</option>`).join('')}`;
 try{const v=localStorage.getItem('oncourt.v5view');if(v&&(VIEWS.some(x=>x[0]===v)||v==='folder'))view=v;const c=localStorage.getItem('oncourt.v5cal');if(c)calMode=c;curFolder=localStorage.getItem('oncourt.v6folder')||'';taskGroup=localStorage.getItem('oncourt.v6group')||'prazo'}catch(e){}
 view='dash';
 
@@ -823,7 +862,9 @@ function openApp(){
   unlocked=true;lockMode='open';$('#lock').hidden=true;$('#app').hidden=false;
   try{sessionStorage.setItem('oncourt.unlock',lockRec.hash)}catch(e){}
   renderQuick();render();setTimeout(checkReminders,800);
+  setTimeout(openFromLink,900);
 }
+function openFromLink(){try{const u=new URL(location.href),id=u.searchParams.get('item');if(!id)return;u.searchParams.delete('item');history.replaceState(null,'',u.pathname+u.search+u.hash);const it=items.get(id);if(it)openEditor(it)}catch(e){}}
 function lockNow(){try{sessionStorage.removeItem('oncourt.unlock')}catch(e){}closeDrawer();if(dlg.open)dlg.close();if($('#fidlg').open)$('#fidlg').close();if($('#fdlg').open)$('#fdlg').close();$('#sres').hidden=true;$('#q').value='';$('#toasts').innerHTML='';showLock(lockRec?'enter':'setup')}
 $('#lockForm').addEventListener('submit',async e=>{
   e.preventDefault();const err=m=>{$('#lk-err').textContent=m};
@@ -893,12 +934,13 @@ function renderNav(){
   $('#sidenav').innerHTML=VIEWS.map(([k,l,svg])=>`<button class="nv" data-view="${k}" ${view===k?'aria-current="page"':''}>${svg}<span>${l}</span>${cnt[k]||''}</button>`).join('');
   const t=todayStr();
   $('#folderNav').innerHTML=`<div class="fold-h"><h4>Pastas</h4><button class="linkbtn" data-act="newfolder">+ Nova</button></div>`+
-    (folderList().map(f=>{const its=openTasks().filter(i=>folderOf(i)===f.id);const late=its.some(i=>i.date&&i.date<t);
-      return `<button class="nv fv" data-folder="${f.id}" ${view==='folder'&&curFolder===f.id?'aria-current="page"':''}><span class="fsq" style="--fc:${fcol(f)}"></span><span>${esc(f.name)}</span>${its.length?`<span class="c${late?' late':''}" title="${its.length} pendências${late?', com atrasadas':''}">${its.length}</span>`:''}</button>`}).join('')
+    (treeList().map(f=>{const fam=famIds(f.id),its=openTasks().filter(i=>fam.includes(folderOf(i)));const late=its.some(i=>i.date&&i.date<t);
+      return `<button class="nv fv${isTop(f)?'':' sub'}" data-folder="${f.id}" ${view==='folder'&&curFolder===f.id?'aria-current="page"':''}><span class="fsq" style="--fc:${fcol(f)}"></span><span>${esc(f.name)}</span>${its.length?`<span class="c${late?' late':''}" title="${its.length} pendências${late?', com atrasadas':''}">${its.length}</span>`:''}</button>`}).join('')
     ||'<span class="small" style="padding:4px 11px">Nenhuma pasta ainda.</span>');
   const perm=notifState();const hasEx=[...items.values()].some(i=>i.example);
   $('#sidefoot').innerHTML=`<div class="status ${store.mode==='db'?'on':''}"><i></i><span>${statusNote||(store.mode==='db'?'Salvo na sua conta':'Salvo só neste navegador')}</span></div>
-    ${perm!=='granted'||!soundOn?'<button class="btn ghost" data-act="notify">Ativar som dos lembretes</button>':''}
+    ${perm!=='granted'||!soundOn||(pushOk()&&!window.__pushOn)?'<button class="btn ghost" data-act="notify">Ativar notificações</button>':''}
+    ${window.__pushOn?'<button class="btn ghost" data-act="testpush">Testar notificação</button>':''}
     ${hasEx?'<button class="btn ghost" data-act="clearex">Remover exemplos</button>':''}
     <button class="btn ghost" data-act="changepin">Trocar PIN</button>
     <button class="btn ghost" data-act="lock">Bloquear agenda</button>
@@ -927,7 +969,8 @@ function renderHeading(){
     eb=`${rel?rel+' · ':''}Semana ${isoWeek(d)}`;const txt=`${DIAS[d.getDay()].replace(/^./,c=>c.toUpperCase())}, ${d.getDate()} de ${MESES[d.getMonth()]}`;h=cursor===t?`<span class="mark">${txt}</span>`:txt}
   else if(view==='notes'){eb='Ideias, reuniões e registros';h='Anotações'}
   else if(view==='folder'){const f=folders.get(curFolder);
-    $('#eyebrow').innerHTML=`Pasta · <button class="linkbtn" data-act="editfolder" style="padding:0;font-size:inherit;letter-spacing:inherit;text-transform:inherit">editar</button>`;
+    const par=f&&!isTop(f)?folders.get(f.parent):null;const LB='style="padding:0;font-size:inherit;letter-spacing:inherit;text-transform:inherit"';
+    $('#eyebrow').innerHTML=par?`<button class="linkbtn" data-folder="${par.id}" ${LB}>${esc(par.name)}</button> › Subpasta · <button class="linkbtn" data-act="editfolder" ${LB}>editar</button>`:`Pasta · <button class="linkbtn" data-act="editfolder" ${LB}>editar</button>`;
     $('#heading').innerHTML=f?`<span class="fsq" style="--fc:${fcol(f)}"></span>${esc(f.name)}`:'Pasta';return}
   else if(view==='files'){eb='Documentos importantes';h='Arquivos'}
   else if(view==='resumo'){const a=weekStart(d),b=addDays(a,6);eb=`Semana ${isoWeek(a)} · ${a.getFullYear()}${ymd(a)===ymd(weekStart(now))?' · esta semana':''}`;
@@ -977,10 +1020,11 @@ function row(i,o={}){
   let left;
   if(o.mode==='due'){const ds=o.date||i.date;left=ds?`<span>${DIAS3[parse(ds).getDay()]}</span><small>${ddmm(parse(ds))}</small>`:'<span>—</span><small>sem prazo</small>'}
   else if(o.mode==='done'){left=`<span>${hhmm(new Date(doneAt(i)))}</span>`}
+  else if(o.mode==='doneday'){const dd=new Date(doneAt(i));left=`<span>${DIAS3[dd.getDay()]}</span><small>${ddmm(dd)}</small>`}
   else left=`<span>${i.time||'—'}</span>${i.endTime?`<small>${i.endTime}</small>`:i.time?'':`<small>${i.kind==='task'?'sem hora':'dia todo'}</small>`}`;
   const late=o.mode==='due'&&i.kind==='task'&&!i.done&&i.date&&i.date<todayStr();
-  return `<div class="it k-${i.kind}${i.done?' is-done':''}${isHi(i)?' prio-alta':''}"><div class="it-time${late?' late-txt':''}">${left}</div><div class="it-mark">${mark}</div>
-    <div class="it-col"><button class="it-main" data-act="edit" data-id="${i.id}"><span class="it-title">${esc(i.title)}</span>${metaHtml(i,{time:o.mode==='due',folder:o.folder!==false&&view!=='folder'&&!(view==='tasks'&&taskGroup==='pasta'&&o.mode==='due')})}</button>
+  return `<div class="it k-${i.kind}${i.done?' is-done':''}${isHi(i)?' prio-alta':''}"${i.kind==='task'?` data-swipe="${i.done?'↺':'✓'}"`:''}><div class="it-time${late?' late-txt':''}">${left}</div><div class="it-mark">${mark}</div>
+    <div class="it-col"><button class="it-main" data-act="edit" data-id="${i.id}"><span class="it-title">${esc(i.title)}</span>${metaHtml(i,{time:o.mode==='due',folder:o.folder!==false&&(view!=='folder'||folderOf(i)!==curFolder)&&!(view==='tasks'&&taskGroup==='pasta'&&o.mode==='due')})}</button>
     ${late?`<div class="snz-row"><button class="snz" data-act="snooze" data-id="${i.id}" data-to="1">Amanhã</button><button class="snz" data-act="snooze" data-id="${i.id}" data-to="mon">Segunda</button><button class="snz" data-act="snooze" data-id="${i.id}" data-to="7">+1 semana</button></div>`:''}</div></div>`;
 }
 
@@ -992,7 +1036,7 @@ function viewTasks(){
   const dToday=done.filter(x=>ymd(new Date(doneAt(x)))===t).length,dWeek=done.filter(x=>doneAt(x)>=ws).length,dMonth=done.filter(x=>doneAt(x)>=ms).length;
   const by=(a,b)=>hiFirst(a,b)||(a.date||'9').localeCompare(b.date||'9')||cmpTime(a,b);
   const groups=taskGroup==='pasta'
-    ?[...folderList().map(f=>[`<span class="fsq" style="--fc:${fcol(f)}"></span>${esc(f.name)}`,open.filter(i=>folderOf(i)===f.id)]),['Sem pasta',open.filter(i=>!folders.has(folderOf(i)))]].filter(g=>g[1].length)
+    ?[...treeList().map(f=>[`<span class="fsq" style="--fc:${fcol(f)}"></span>${fpath(f)}`,open.filter(i=>folderOf(i)===f.id)]),['Sem pasta',open.filter(i=>!folders.has(folderOf(i)))]].filter(g=>g[1].length)
     :(()=>{const r=open.filter(i=>!isHi(i));return [['Prioridade alta',open.filter(isHi),'hi'],['Atrasadas',r.filter(i=>i.date&&i.date<t),'late'],['Hoje',r.filter(i=>i.date===t)],['Próximas',r.filter(i=>i.date&&i.date>t)],['Sem prazo',r.filter(i=>!i.date)]]})().filter(g=>g[1].length);
   const gseg=`<div class="seg" role="group" aria-label="Agrupar por">${[['prazo','Por prazo'],['pasta','Por pasta']].map(([k,l])=>`<button data-act="tgroup" data-g="${k}" aria-pressed="${taskGroup===k}">${l}</button>`).join('')}</div>`;
   const doneSorted=done.sort((a,b)=>doneAt(b)-doneAt(a));const shown=doneSorted.slice(0,doneLimit);
@@ -1211,7 +1255,7 @@ function viewNotes(){
 /* Pasta */
 function viewFolder(){
   const f=folders.get(curFolder);if(!f)return '<div class="panel"><div class="empty">Abrindo a pasta…</div></div>';
-  const t=todayStr(),its=all().filter(i=>folderOf(i)===curFolder);
+  const t=todayStr(),fam=famIds(curFolder),its=all().filter(i=>fam.includes(folderOf(i)));
   const open=its.filter(i=>i.kind==='task'&&!i.done),done=its.filter(i=>i.kind==='task'&&i.done).sort((a,b)=>doneAt(b)-doneAt(a)),notes=its.filter(i=>i.kind==='note').sort(noteSort);
   const late=open.filter(i=>i.date&&i.date<t);
   const by=(a,b)=>hiFirst(a,b)||(a.date||'9').localeCompare(b.date||'9')||cmpTime(a,b);
@@ -1219,16 +1263,20 @@ function viewFolder(){
   const groups=[['Prioridade alta',hi,'hi'],['Atrasadas',rest.filter(i=>i.date&&i.date<t),'late'],['Com prazo',rest.filter(i=>i.date&&i.date>=t)],['Sem prazo',rest.filter(i=>!i.date)]].filter(g=>g[1].length);
   const tot=open.length+done.length,pct=tot?Math.round(done.length/tot*100):0,in7=ymd(addDays(new Date(),7));
   const soon=open.filter(i=>i.date&&i.date>=t&&i.date<=in7);
-  const evs=occurrences(t,30,i=>i.kind==='event'&&folderOf(i)===curFolder).slice(0,5);
-  const ffiles=[...files.values()].filter(f=>f.folder===curFolder).sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
-  return `<section class="panel fprog"><div class="fp-top"><div class="fp-main"><span class="k">Progresso da pasta</span><b>${pct}%</b><span class="s">${tot?`${done.length} de ${tot} ${ss(tot,'pendência concluída','pendências concluídas')}`:'nenhuma pendência ainda'}</span></div>
+  const evs=occurrences(t,30,i=>i.kind==='event'&&fam.includes(folderOf(i))).slice(0,5);
+  const ffiles=[...files.values()].filter(x=>fam.includes(x.folder)).sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+  const top=isTop(f)?f:folders.get(f.parent),subs=subsOf(top.id);
+  const subrow=`<div class="subrow"><button class="subchip${curFolder===top.id?' on':''}" data-folder="${top.id}">${subs.length?'Tudo':esc(top.name)}</button>${subs.map(x=>`<button class="subchip${curFolder===x.id?' on':''}" data-folder="${x.id}"><span class="fsq" style="--fc:${fcol(x)}"></span>${esc(x.name)}</button>`).join('')}<button class="subchip add" data-act="newsub" data-p="${top.id}">+ Subpasta</button></div>`;
+  return `${subrow}<section class="panel fprog"><div class="fp-top"><div class="fp-main"><span class="k">Progresso da pasta</span><b>${pct}%</b><span class="s">${tot?`${done.length} de ${tot} ${ss(tot,'pendência concluída','pendências concluídas')}`:'nenhuma pendência ainda'}</span></div>
     <div class="fp-nums"><span><b>${soon.length}</b>vencem em 7 dias</span><span class="${late.length?'late':''}"><b>${late.length}</b>${ss(late.length,'atrasada','atrasadas')}</span><span><b>${open.length}</b>em aberto</span></div></div>
     <div class="fp-bar" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso da pasta"><i style="width:${pct}%;background:${fcol(f)}"></i></div></section>
   <div class="two">
-    <section class="panel"><div class="panel-h"><h2>Pendências</h2><span class="sub">ordenadas pelo prazo</span></div>
-      ${groups.length?groups.map(([n,l,c])=>`<div class="group-label ${c||''}">${n} <span class="n">${l.length}</span></div>${l.sort(by).map(i=>row(i,{mode:'due'})).join('')}`).join('')
-        :'<div class="empty"><strong>Nada pendente.</strong><span>Toque em Novo para criar uma pendência nesta pasta.</span></div>'}
-      ${done.length?`<button class="toggle-done" data-act="fdone">${showFolderDone?'Esconder':'Mostrar'} concluídas (${done.length})</button>${showFolderDone?done.map(i=>row(i,{mode:'due'})).join(''):''}`:''}</section>
+    <section class="panel fpend"><div class="panel-h"><h2>Pendências</h2><div class="seg" role="group" aria-label="Visão">${[['todo','A fazer',open.length],['done','Resolvidas',done.length],['day','Por dia','']].map(([k,l,n])=>`<button data-act="ftab" data-t="${k}" aria-pressed="${folderTab===k}">${l}${n!==''?` <span class="segn">${n}</span>`:''}</button>`).join('')}</div></div>
+      ${folderTab==='todo'?(groups.length?groups.map(([n,l,c])=>`<div class="group-label ${c||''}">${n} <span class="n">${l.length}</span></div>${l.sort(by).map(i=>row(i,{mode:'due'})).join('')}`).join('')
+        :'<div class="empty"><strong>Nada pendente.</strong><span>Toque em Novo para criar uma pendência nesta pasta.</span></div>')
+      :folderTab==='done'?(done.length?doneGroups(done).map(([n,l])=>`<div class="group-label">${n} <span class="n">${l.length}</span></div>${l.map(i=>row(i,{mode:'doneday'})).join('')}`).join('')
+        :'<div class="empty"><strong>Nenhuma resolvida ainda.</strong><span>As pendências que você concluir nesta pasta aparecem aqui.</span></div>')
+      :folderDayView(its,t)}</section>
     <div class="stack">
       <section class="panel"><div class="panel-h"><h2>Arquivos</h2><label class="btn" for="fileIn" data-act="pickfile" data-up="${curFolder}">Adicionar</label></div>
         ${uploadsPanel()}${ffiles.length?ffiles.map(f=>fileRow(f,{folder:false})).join(''):'<div class="empty">Nenhum arquivo nesta pasta. Você também pode arrastar arquivos para esta tela.</div>'}</section>
@@ -1237,6 +1285,25 @@ function viewFolder(){
   </div>`;
 }
 
+function doneGroups(done){
+  const t=todayStr(),y=ymd(addDays(new Date(),-1)),ws=weekStart(new Date()).getTime();const g=[['Hoje',[]],['Ontem',[]],['Esta semana',[]],['Antes',[]]];
+  for(const i of done){const d=ymd(new Date(doneAt(i)));g[d===t?0:d===y?1:doneAt(i)>=ws?2:3][1].push(i)}
+  return g.filter(x=>x[1].length);
+}
+function folderDayView(its,t){
+  const sel=folderDay||t,ws=weekStart(parse(sel));
+  const dayItems=s=>its.filter(i=>(i.kind==='task'&&i.date===s)||(i.kind==='event'&&occursOn(i,s)));
+  const strip=[...Array(7)].map((_,k)=>{const d=addDays(ws,k),s=ymd(d),list=dayItems(s),open=list.filter(i=>i.kind==='task'&&!i.done).length,ev=list.filter(i=>i.kind==='event').length,lateD=s<t&&open;
+    return `<button class="dchip${s===sel?' on':''}${s===t?' today':''}" data-act="fday" data-d="${s}" aria-pressed="${s===sel}" aria-label="${DIAS3[d.getDay()]} ${ddmm(d)}: ${open} em aberto"><span class="dw">${DIAS3[d.getDay()]}</span><b>${d.getDate()}</b><span class="dn${lateD?' late':''}">${open||ev?(open?open:'')+(ev?'•':''):''}</span></button>`}).join('');
+  const list=dayItems(sel).sort((a,b)=>(a.done?1:0)-(b.done?1:0)||hiFirst(a,b)||cmpTime(a,b));
+  const lateL=sel===t?its.filter(i=>i.kind==='task'&&!i.done&&i.date&&i.date<t).sort((a,b)=>a.date.localeCompare(b.date)):[];
+  const d=parse(sel),label=sel===t?'Hoje':sel===ymd(addDays(new Date(),1))?'Amanhã':sel===ymd(addDays(new Date(),-1))?'Ontem':DIAS[d.getDay()].replace(/^./,c=>c.toUpperCase());
+  return `<div class="dnav"><button class="btn icon" data-act="fday" data-d="${ymd(addDays(ws,-7))}" aria-label="Semana anterior">‹</button><div class="dlabel"><b>${label}</b><span>${ddmm(d)}/${d.getFullYear()}</span></div>${sel!==t?`<button class="btn" data-act="fday" data-d="${t}">Hoje</button>`:''}<button class="btn icon" data-act="fday" data-d="${ymd(addDays(ws,7))}" aria-label="Próxima semana">›</button></div>
+    <div class="dstrip">${strip}</div>
+    ${lateL.length?`<div class="group-label late">Atrasadas <span class="n">${lateL.length}</span></div>${lateL.map(i=>row(i,{mode:'due'})).join('')}`:''}
+    ${list.length?`<div class="group-label">${label==='Hoje'||label==='Amanhã'||label==='Ontem'?label:'Neste dia'} <span class="n">${list.length}</span></div>${list.map(i=>row(i)).join('')}`
+      :`<div class="empty"><strong>Nada neste dia.</strong><span>Toque em Novo para criar uma pendência para ${ddmm(d)}.</span></div>`}`;
+}
 /* Arquivos */
 function fileRow(f,o={}){
   const sp=FT[f.ext]||[(f.ext||'?').toUpperCase().slice(0,4),'db','','other'];const cat=FCAT[sp[3]];const d=new Date(f.createdAt||0);
@@ -1438,7 +1505,7 @@ function clProg(){const n=cl.length,d=cl.filter(c=>c.done).length;$('#cl-prog').
 function setKind(k){kind=k;document.querySelectorAll('#kinds button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.kind===k)));syncFields()}
 function openEditor(item,preset={}){
   editing=item||null;$('#err').textContent='';const k=preset.kind||'task';
-  const i=item||{kind:k,date:preset.date??(view==='cal'||view==='dash'?cursor:k==='event'?todayStr():''),time:preset.time||'',remind:k==='event'?'15':''};
+  const i=item||{kind:k,date:preset.date??(view==='cal'||view==='dash'?cursor:view==='folder'&&folderTab==='day'?(folderDay||todayStr()):k==='event'?todayStr():''),time:preset.time||'',remind:k==='event'?'15':''};
   $('#f-title').value=i.title||'';$('#f-date').value=i.date||'';$('#f-time').innerHTML=hourOpts(i.time||'','Sem horário');$('#f-end').innerHTML=hourOpts(i.endTime||'','Sem fim');
   $('#f-repeat').value=i.repeat||'';$('#f-until').value=i.until||'';$('#f-place').value=i.place||'';
   $('#f-prio').value=i.priority||'media';$('#f-remind').value=i.remind==null?'':String(i.remind);
@@ -1506,7 +1573,7 @@ function spawnNext(it){
 
 /* ---------- Ações ---------- */
 function toggleTask(it){const d=!it.done;const n={...it,done:d,updatedAt:Date.now()};if(d){n.completedAt=Date.now();spawnNext(n)}else delete n.completedAt;store.save(n)}
-function openFolder(id){curFolder=id;showFolderDone=false;try{localStorage.setItem('oncourt.v6folder',id)}catch(e){}setView('folder')}
+function openFolder(id){curFolder=id;showFolderDone=false;folderDay='';try{localStorage.setItem('oncourt.v6folder',id)}catch(e){}setView('folder')}
 function setView(v){if(v==='files')refreshUsage();view=v;try{localStorage.setItem('oncourt.v5view',v)}catch(e){}closeDrawer();renderQuick();render();window.scrollTo({top:0})}
 document.addEventListener('click',e=>{
   const fo=e.target.closest('[data-folder]');if(fo){openFolder(fo.dataset.folder);return}
@@ -1534,9 +1601,13 @@ document.addEventListener('click',e=>{
   else if(a==='newweeknote'){openEditor(null,{kind:'note',week:b.dataset.w})}
   else if(a==='tgroup'){taskGroup=b.dataset.g;try{localStorage.setItem('oncourt.v6group',taskGroup)}catch(e){}render()}
   else if(a==='fdone'){showFolderDone=!showFolderDone;render()}
+  else if(a==='ftab'){folderTab=b.dataset.t;try{localStorage.setItem('oncourt.ftab',folderTab)}catch(e){}render()}
+  else if(a==='fday'){folderDay=b.dataset.d;folderTab='day';render()}
   else if(a==='newfolder'){closeDrawer();openFolderDlg(null)}
+  else if(a==='newsub'){openFolderDlg(null,b.dataset.p)}
   else if(a==='editfolder'){openFolderDlg(folders.get(curFolder))}
   else if(a==='notify')enableNotify();
+  else if(a==='testpush')testPush();
   else if(a==='examples')loadExamples();
   else if(a==='clearex'){closeDrawer();[...items.values()].filter(i=>i.example).forEach(i=>store.remove(i.id))}
   else if(a==='lock')lockNow();
@@ -1568,12 +1639,29 @@ document.addEventListener('keydown',e=>{
 document.addEventListener('input',e=>{if(e.target.id==='qtItems'||e.target.id==='qtDesc'){const t=e.target;t.style.height='auto';t.style.height=t.scrollHeight+'px'}});
 $('#fab').addEventListener('click',()=>openEditor(null,{kind:view==='cal'?'event':'task'}));
 
+/* ---------- Deslizar para concluir (celular) ---------- */
+(function(){let el=null,id=null,sx=0,sy=0,dx=0,active=false,swallow=0;const LIM=90;
+  document.addEventListener('touchstart',e=>{if(e.touches.length>1){el=null;return}const it=e.target.closest('.it[data-swipe]');if(!it){el=null;return}
+    const b=it.querySelector('[data-act=toggle]');if(!b){el=null;return}el=it;id=b.dataset.id;sx=e.touches[0].clientX;sy=e.touches[0].clientY;dx=0;active=false},{passive:true});
+  document.addEventListener('touchmove',e=>{if(!el)return;const x=e.touches[0].clientX-sx,y=e.touches[0].clientY-sy;
+    if(!active){if(Math.abs(y)>10&&Math.abs(y)>Math.abs(x)){el=null;return}if(x>14&&x>Math.abs(y)*1.5){active=true;el.classList.add('swiping')}else return}
+    dx=Math.max(0,Math.min(x,el.offsetWidth*.8));el.style.setProperty('--sx',dx+'px');el.classList.toggle('swipe-ok',dx>LIM)},{passive:true});
+  const end=()=>{if(!el)return;const it=el,ok=active&&dx>LIM,wasActive=active;el=null;if(!wasActive)return;swallow=Date.now();
+    it.classList.remove('swiping','swipe-ok');it.style.setProperty('--sx','0px');
+    if(ok){const t=items.get(id);if(t){if(navigator.vibrate)try{navigator.vibrate(12)}catch(e){}toggleTask(t);if(!t.done)toast('Pendência concluída',t.title)}}};
+  document.addEventListener('touchend',end,{passive:true});document.addEventListener('touchcancel',end,{passive:true});
+  document.addEventListener('click',e=>{if(Date.now()-swallow<450&&e.target.closest('.it')){e.preventDefault();e.stopPropagation()}},true);
+})();
+
 /* ---------- Pastas: criar, editar, excluir ---------- */
 const fdlg=$('#fdlg');let fEditing=null,fColor=1;
 function renderSwatches(){$('#fd-colors').innerHTML=[1,2,3,4,5,6].map(c=>`<button type="button" data-c="${c}" style="--fc:var(--c${c})" aria-pressed="${fColor===c}" aria-label="Cor ${c}"></button>`).join('')}
-function openFolderDlg(f){
-  fEditing=f||null;fColor=f?f.color||1:((folders.size%6)+1);
-  $('#fd-title').textContent=f?'Editar pasta':'Nova pasta';$('#fd-name').value=f?f.name:'';$('#fd-err').textContent='';
+function openFolderDlg(f,parent){
+  fEditing=f||null;const par=f?(f.parent||''):(parent||'');fColor=f?f.color||1:par&&folders.get(par)?folders.get(par).color||1:((folders.size%6)+1);
+  const canNest=!f||!subsOf(f.id).length;
+  $('#fd-par').innerHTML=`<option value="">Nenhuma (pasta principal)</option>${topFolders().filter(x=>!f||x.id!==f.id).map(x=>`<option value="${x.id}" ${par===x.id?'selected':''}>${esc(x.name)}</option>`).join('')}`;
+  $('#fd-par-w').hidden=!canNest;
+  $('#fd-title').textContent=f?(par?'Editar subpasta':'Editar pasta'):(par?'Nova subpasta':'Nova pasta');$('#fd-name').value=f?f.name:'';$('#fd-err').textContent='';
   const del=$('#fd-del');del.hidden=!f;del.classList.remove('armed');del.textContent='Excluir pasta';renderSwatches();
   try{fdlg.showModal()}catch(e){fdlg.setAttribute('open','')}setTimeout(()=>$('#fd-name').focus(),30);
 }
@@ -1581,14 +1669,15 @@ $('#fd-colors').addEventListener('click',e=>{const b=e.target.closest('[data-c]'
 $('#fd-cancel').addEventListener('click',()=>fdlg.close());
 $('#fd-del').addEventListener('click',e=>{const b=e.currentTarget;
   if(!b.classList.contains('armed')){b.classList.add('armed');b.textContent='Confirmar: itens ficam sem pasta';setTimeout(()=>{b.classList.remove('armed');b.textContent='Excluir pasta'},4000);return}
-  const id=fEditing.id;fdlg.close();setView('tasks');store.removeFolder(id);toast('Pasta excluída','As pendências e arquivos dela continuam na agenda, sem pasta.')});
+  const id=fEditing.id;fdlg.close();for(const x of subsOf(id))store.saveFolder({...x,parent:''});setView('tasks');store.removeFolder(id);toast('Pasta excluída','As pendências e arquivos dela continuam na agenda, sem pasta.')});
 $('#fform').addEventListener('submit',async e=>{
   e.preventDefault();const name=$('#fd-name').value.trim();
   if(!name){$('#fd-err').textContent='Dê um nome à pasta.';return}
-  if(folderList().some(f=>norm(f.name)===norm(name)&&(!fEditing||f.id!==fEditing.id))){$('#fd-err').textContent='Já existe uma pasta com esse nome.';return}
+  const parent=$('#fd-par-w').hidden?(fEditing&&fEditing.parent||''):$('#fd-par').value;
+  if(folderList().some(f=>norm(f.name)===norm(name)&&(f.parent||'')===parent&&(!fEditing||f.id!==fEditing.id))){$('#fd-err').textContent='Já existe uma pasta com esse nome aqui.';return}
   fdlg.close();
-  if(fEditing){await store.saveFolder({...fEditing,name,color:fColor});renderHeading()}
-  else{const id=await store.saveFolder({name,color:fColor,order:Math.max(-1,...folderList().map(f=>f.order??0))+1,createdAt:Date.now()});openFolder(id)}
+  if(fEditing){await store.saveFolder({...fEditing,name,color:fColor,parent});renderHeading();render()}
+  else{const id=await store.saveFolder({name,color:fColor,parent,order:Math.max(-1,...folderList().map(f=>f.order??0))+1,createdAt:Date.now()});openFolder(id)}
 });
 function shift(n){const d=parse(cursor);const mode=view==='dash'?'day':view==='resumo'?'week':calMode;if(mode==='day')d.setDate(d.getDate()+n);else if(mode==='week')d.setDate(d.getDate()+7*n);else d.setMonth(d.getMonth()+n,1);cursor=ymd(d);render()}
 $('#prev').addEventListener('click',()=>shift(-1));$('#next').addEventListener('click',()=>shift(1));
@@ -1650,8 +1739,17 @@ let soundOn=false,audio=null;
 function notifState(){try{return 'Notification' in window?Notification.permission:'unsupported'}catch(e){return 'unsupported'}}
 function unlockAudio(){try{if(!audio)audio=new (window.AudioContext||window.webkitAudioContext)();if(audio.state==='suspended')audio.resume();soundOn=true}catch(e){}}
 document.addEventListener('pointerdown',()=>{if(!soundOn){unlockAudio();if(unlocked)renderNav()}},{once:true});
+const pushOk=()=>!!(window.oncourtPushSupported&&window.oncourtPushSupported());
+window.oncourtPushChanged=()=>{if(unlocked)renderNav()};
 async function enableNotify(){unlockAudio();chime();try{if('Notification' in window&&Notification.permission==='default')await Notification.requestPermission()}catch(e){}
-  if(notifState()!=='granted')toast('Som dos lembretes ativado','Os lembretes tocam aqui enquanto a agenda estiver aberta.');render()}
+  if(pushOk()&&notifState()==='granted'){const r=await window.oncourtEnablePush();
+    if(r==='ok')toast('Notificações ativadas','Você vai receber os lembretes neste aparelho mesmo com a agenda fechada.');
+    else toast('Não foi possível ativar o push','Os lembretes continuam tocando enquanto a agenda estiver aberta.');render();return}
+  if(notifState()==='denied')toast('Notificações bloqueadas','Libere as notificações deste site nas configurações do navegador ou do iPhone.');
+  else if(!pushOk()&&/iPhone|iPad/.test(navigator.userAgent)&&!navigator.standalone)toast('Abra pelo ícone da tela de início','No iPhone, as notificações só funcionam com a agenda adicionada à tela de início.');
+  else if(notifState()!=='granted')toast('Som dos lembretes ativado','Os lembretes tocam aqui enquanto a agenda estiver aberta.');render()}
+async function testPush(){toast('Enviando teste…','A notificação deve chegar em alguns segundos.');const n=await window.oncourtTestPush();
+  if(n<0)toast('Não foi possível testar','Confira se a função "lembretes" foi criada no Supabase.');else if(n===0)toast('Nenhum aparelho recebeu','Toque em Ativar notificações de novo.')}
 function chime(){if(!audio||!soundOn)return;try{const t=audio.currentTime;[[880,0],[1175,.18]].forEach(([f,o])=>{const g=audio.createGain(),osc=audio.createOscillator();osc.type='sine';osc.frequency.value=f;
   g.gain.setValueAtTime(0,t+o);g.gain.linearRampToValueAtTime(.18,t+o+.02);g.gain.exponentialRampToValueAtTime(.001,t+o+.6);osc.connect(g).connect(audio.destination);osc.start(t+o);osc.stop(t+o+.65)})}catch(e){}}
 function reminders(){const out=[];for(const o of occurrences(ymd(addDays(new Date(),-1)),9)){const i=o.i;if(i.remind==null||i.remind==='')continue;if(i.kind==='task'&&i.done)continue;out.push({i,date:o.date,start:o.start,at:o.start-Number(i.remind)*60000})}return out}
@@ -1663,7 +1761,7 @@ function checkReminders(){
     if(now>=r.at&&now-r.at<6*3600e3&&!fired[key]){fired[key]=now;changed=true;
       const when=i.kind==='task'?`Prazo: ${shortDate(r.date)}${i.time?' às '+i.time:''}`:`${r.start>now?rel(r.start-now).replace(/^em/,'Começa em'):'Agora'}${i.time?' · '+i.time:''}${i.place?' · '+i.place:''}`;
       toast(i.title,when,i.id);chime();addInbox(key,i,when);
-      if(notifState()==='granted'){try{new Notification(i.title,{body:when,tag:key})}catch(e){}}}}
+      if(notifState()==='granted'&&!window.__pushOn){try{new Notification(i.title,{body:when,tag:key})}catch(e){}}}}
   if(changed){for(const k in fired)if(now-fired[k]>3*864e5)delete fired[k];try{localStorage.setItem('oncourt.fired',JSON.stringify(fired))}catch(e){}}
 }
 let inbox=[];try{inbox=JSON.parse(localStorage.getItem('oncourt.inbox')||'[]')}catch(e){}

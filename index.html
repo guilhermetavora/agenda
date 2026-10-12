@@ -38,6 +38,19 @@
 @media (max-width:520px){.dstrip{gap:4px;padding:10px 12px 6px}.dnav{padding:12px 14px 2px}.fpend .panel-h .seg{width:100%}.fpend .panel-h .seg button{flex:1}}
 
 .arc{display:none!important}
+.nv.fv .fchev{flex:none;opacity:.55;transition:transform .18s ease;margin-left:-2px}
+.nv.fv.fopen .fchev{transform:rotate(90deg)}
+
+.subchip.org{color:var(--muted);gap:6px}
+.so-list{display:flex;flex-direction:column;gap:8px}
+.so-row{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--paper)}
+.so-row .fsq{width:11px;height:11px;margin:0;box-shadow:none}
+.so-n{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.3}
+.so-n b{font-size:14px;overflow-wrap:anywhere}
+.so-row .btn.icon{width:34px;height:34px;padding:0;font-size:16px}
+.so-row .btn[disabled]{opacity:.35;cursor:default}
+.so-del{padding:7px 12px;font-size:13px}
+
 .mtags{display:flex;flex-wrap:wrap;gap:4px;margin-top:2px}
 .mtag{display:inline-flex;align-items:center;gap:4px;max-width:100%;font-size:11px;font-weight:600;line-height:1;padding:4px 7px;border-radius:999px;background:color-mix(in srgb,var(--fc) 16%,transparent);color:var(--ink);border:1px solid color-mix(in srgb,var(--fc) 40%,transparent)}
 .mtag .mtn{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
@@ -791,6 +804,14 @@ dialog::backdrop{background:rgba(22,20,19,.5)}
     <input type="file" id="vattIn" multiple hidden accept=".pdf,.docx,.xlsx,.pptx,.csv,.png,.jpg,.jpeg,.webp,.gif,.txt,.md,.json,.zip">
   </div>
 </dialog>
+<dialog id="sodlg" aria-label="Organizar subpastas">
+  <div class="dlg">
+    <div class="sheet-top"><h2 id="so-title" style="margin:0;font-family:var(--f-display);font-size:20px">Subpastas</h2><button type="button" class="x" id="so-close" aria-label="Fechar">×</button></div>
+    <p class="small" style="margin:0">Use as setas para mudar a ordem. Ao excluir uma subpasta, as pendências e arquivos dela vão para a pasta principal.</p>
+    <div id="so-list" class="so-list"></div>
+    <div class="dlg-foot"><span></span><div class="r"><button type="button" class="btn primary" id="so-done">Pronto</button></div></div>
+  </div>
+</dialog>
 <dialog id="fdlg">
   <form class="dlg" id="fform" novalidate>
     <h2 id="fd-title">Nova pasta</h2>
@@ -994,7 +1015,7 @@ function openApp(){
   setTimeout(openFromLink,900);
 }
 function openFromLink(){try{const u=new URL(location.href),id=u.searchParams.get('item');if(!id)return;u.searchParams.delete('item');history.replaceState(null,'',u.pathname+u.search+u.hash);const it=items.get(id);if(it)openEditor(it)}catch(e){}}
-function lockNow(){try{sessionStorage.removeItem('oncourt.unlock')}catch(e){}closeDrawer();if(vdlg.open)vdlg.close();if(dlg.open)dlg.close();if($('#fidlg').open)$('#fidlg').close();if($('#fdlg').open)$('#fdlg').close();$('#sres').hidden=true;$('#q').value='';$('#toasts').innerHTML='';showLock(lockRec?'enter':'setup')}
+function lockNow(){try{sessionStorage.removeItem('oncourt.unlock')}catch(e){}closeDrawer();if(vdlg.open)vdlg.close();if(sodlg.open)sodlg.close();if(dlg.open)dlg.close();if($('#fidlg').open)$('#fidlg').close();if($('#fdlg').open)$('#fdlg').close();$('#sres').hidden=true;$('#q').value='';$('#toasts').innerHTML='';showLock(lockRec?'enter':'setup')}
 $('#lockForm').addEventListener('submit',async e=>{
   e.preventDefault();const err=m=>{$('#lk-err').textContent=m};
   const pin=$('#lk-pin').value.trim(),conf=$('#lk-conf').value.trim(),cur=$('#lk-cur').value.trim();
@@ -1066,8 +1087,9 @@ function renderNav(){
   $('#sidenav').innerHTML=VIEWS.map(([k,l,svg])=>`<button class="nv" data-view="${k}" ${view===k?'aria-current="page"':''}>${svg}<span>${l}</span>${cnt[k]||''}</button>`).join('');
   const t=todayStr();
   $('#folderNav').innerHTML=`<div class="fold-h"><h4>Pastas</h4><button class="linkbtn" data-act="newfolder">+ Nova</button></div>`+
-    (treeList().map(f=>{const fam=famIds(f.id),its=openTasks().filter(i=>fam.includes(folderOf(i)));const late=its.some(i=>i.date&&i.date<t);
-      return `<button class="nv fv${isTop(f)?'':' sub'}" data-folder="${f.id}" ${view==='folder'&&curFolder===f.id?'aria-current="page"':''}><span class="fsq" style="--fc:${fcol(f)}"></span><span>${esc(f.name)}</span>${its.length?`<span class="c${late?' late':''}" title="${its.length} pendências${late?', com atrasadas':''}">${its.length}</span>`:''}</button>`}).join('')
+    (treeList().filter(f=>{if(isTop(f))return true;const cf=view==='folder'&&folders.get(curFolder);return !!cf&&(curFolder===f.parent||cf.parent===f.parent)}).map(f=>{const fam=famIds(f.id),its=openTasks().filter(i=>fam.includes(folderOf(i)));const late=its.some(i=>i.date&&i.date<t);
+      const hasSubs=isTop(f)&&subsOf(f.id).length,isOpen=hasSubs&&view==='folder'&&famIds(f.id).includes(curFolder);
+      return `<button class="nv fv${isTop(f)?'':' sub'}${hasSubs?' hs':''}${isOpen?' fopen':''}" data-folder="${f.id}" ${view==='folder'&&curFolder===f.id?'aria-current="page"':''}><span class="fsq" style="--fc:${fcol(f)}"></span><span>${esc(f.name)}</span>${hasSubs?'<svg class="fchev" width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>':''}${its.length?`<span class="c${late?' late':''}" title="${its.length} pendências${late?', com atrasadas':''}">${its.length}</span>`:''}</button>`}).join('')
     ||'<span class="small" style="padding:4px 11px">Nenhuma pasta ainda.</span>');
   const perm=notifState();const hasEx=[...items.values()].some(i=>i.example);
   $('#sidefoot').innerHTML=`<div class="status ${store.mode==='db'?'on':''}"><i></i><span>${statusNote||(store.mode==='db'?'Salvo na sua conta':'Salvo só neste navegador')}</span></div>
@@ -1412,7 +1434,7 @@ function viewFolder(){
   const evs=occurrences(t,30,i=>i.kind==='event'&&fam.includes(folderOf(i))).slice(0,5);
   const ffiles=[...files.values()].filter(x=>fam.includes(x.folder)).sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
   const top=isTop(f)?f:folders.get(f.parent),subs=subsOf(top.id);
-  const subrow=`<div class="subrow"><button class="subchip${curFolder===top.id?' on':''}" data-folder="${top.id}">${subs.length?'Tudo':esc(top.name)}</button>${subs.map(x=>`<button class="subchip${curFolder===x.id?' on':''}" data-folder="${x.id}"><span class="fsq" style="--fc:${fcol(x)}"></span>${esc(x.name)}</button>`).join('')}<button class="subchip add" data-act="newsub" data-p="${top.id}">+ Subpasta</button></div>`;
+  const subrow=`<div class="subrow"><button class="subchip${curFolder===top.id?' on':''}" data-folder="${top.id}">${subs.length?'Tudo':esc(top.name)}</button>${subs.map(x=>`<button class="subchip${curFolder===x.id?' on':''}" data-folder="${x.id}"><span class="fsq" style="--fc:${fcol(x)}"></span>${esc(x.name)}</button>`).join('')}<button class="subchip add" data-act="newsub" data-p="${top.id}">+ Subpasta</button>${subs.length?`<button class="subchip org" data-act="orgsubs" data-p="${top.id}" title="Ordenar ou excluir subpastas"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 4h10M3 8h10M3 12h10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>Organizar</button>`:''}</div>`;
   return `${subrow}<section class="panel fprog"><div class="fp-top"><div class="fp-main"><span class="k">Progresso da pasta</span><b>${pct}%</b><span class="s">${tot?`${done.length} de ${tot} ${ss(tot,'pendência concluída','pendências concluídas')}`:'nenhuma pendência ainda'}</span></div>
     <div class="fp-nums"><span><b>${soon.length}</b>vencem em 7 dias</span><span class="${late.length?'late':''}"><b>${late.length}</b>${ss(late.length,'atrasada','atrasadas')}</span><span><b>${open.length}</b>em aberto</span></div></div>
     <div class="fp-bar" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso da pasta"><i style="width:${pct}%;background:${fcol(f)}"></i></div></section>
@@ -1802,6 +1824,7 @@ document.addEventListener('click',e=>{
   else if(a==='fday'){folderDay=b.dataset.d;folderTab='day';render()}
   else if(a==='newfolder'){closeDrawer();openFolderDlg(null)}
   else if(a==='newsub'){openFolderDlg(null,b.dataset.p)}
+  else if(a==='orgsubs'){openSo(b.dataset.p)}
   else if(a==='editfolder'){openFolderDlg(folders.get(curFolder))}
   else if(a==='notify')enableNotify();
   else if(a==='testpush')testPush();
@@ -1904,6 +1927,31 @@ dlg.addEventListener('close',()=>{const r=viewReturn;viewReturn=null;if(r&&items
   document.addEventListener('click',e=>{if(Date.now()-swallow<450&&e.target.closest('.it,.kcard')){e.preventDefault();e.stopPropagation()}},true);
 })();
 
+/* ---------- Organizar subpastas ---------- */
+const sodlg=$('#sodlg');let soParent=null;
+function renderSo(){const p=folders.get(soParent);if(!p){if(sodlg.open)sodlg.close();return}
+  const subs=subsOf(soParent);$('#so-title').textContent=`Subpastas de ${p.name}`;
+  $('#so-list').innerHTML=subs.length?subs.map((f,k)=>{const n=all().filter(i=>folderOf(i)===f.id&&!(i.kind==='task'&&i.done)).length;
+    return `<div class="so-row"><span class="fsq" style="--fc:${fcol(f)}"></span><span class="so-n"><b>${esc(f.name)}</b><span class="small">${n} em aberto</span></span>
+    <button type="button" class="btn icon" data-so="up" data-id="${f.id}" ${k===0?'disabled':''} aria-label="Subir ${esc(f.name)}">↑</button>
+    <button type="button" class="btn icon" data-so="down" data-id="${f.id}" ${k===subs.length-1?'disabled':''} aria-label="Descer ${esc(f.name)}">↓</button>
+    <button type="button" class="btn danger so-del" data-so="del" data-id="${f.id}">Excluir</button></div>`}).join(''):'<div class="empty">Nenhuma subpasta.</div>'}
+function openSo(pid){soParent=pid;renderSo();try{sodlg.showModal()}catch(e){sodlg.setAttribute('open','')}}
+async function removeSub(id){const f=folders.get(id);if(!f)return;const par=f.parent||'';
+  for(const i of [...items.values()].filter(i=>folderOf(i)===id))await store.save({...i,folder:par});
+  for(const x of [...files.values()].filter(x=>x.folder===id)){files.set(x.id,{...x,folder:par});if(store.mode==='db'){try{await store.ficol.doc(x.id).update({folder:par})}catch(e){}}}
+  await store.removeFolder(id);
+  if(curFolder===id){curFolder=par;try{localStorage.setItem('oncourt.v6folder',par)}catch(e){}}
+  toast('Subpasta excluída',`${f.name} · os itens foram para ${folders.get(par)?folders.get(par).name:'a pasta principal'}`);render()}
+$('#so-list').addEventListener('click',async e=>{const b=e.target.closest('[data-so]');if(!b)return;const id=b.dataset.id,act=b.dataset.so;
+  if(act==='del'){if(!b.classList.contains('armed')){b.classList.add('armed');b.textContent='Confirmar';setTimeout(()=>{if(b.isConnected){b.classList.remove('armed');b.textContent='Excluir'}},4000);return}
+    await removeSub(id);renderSo();return}
+  const subs=subsOf(soParent),k=subs.findIndex(f=>f.id===id),j=act==='up'?k-1:k+1;if(k<0||j<0||j>=subs.length)return;
+  [subs[k],subs[j]]=[subs[j],subs[k]];
+  for(let n=0;n<subs.length;n++){if(subs[n].order!==1000+n)await store.saveFolder({...subs[n],order:1000+n})}
+  renderSo();render()});
+$('#so-close').addEventListener('click',()=>sodlg.close());$('#so-done').addEventListener('click',()=>sodlg.close());
+
 /* ---------- Pastas: criar, editar, excluir ---------- */
 const fdlg=$('#fdlg');let fEditing=null,fColor=1;
 function renderSwatches(){$('#fd-colors').innerHTML=[1,2,3,4,5,6].map(c=>`<button type="button" data-c="${c}" style="--fc:var(--c${c})" aria-pressed="${fColor===c}" aria-label="Cor ${c}"></button>`).join('')}
@@ -1913,13 +1961,15 @@ function openFolderDlg(f,parent){
   $('#fd-par').innerHTML=`<option value="">Nenhuma (pasta principal)</option>${topFolders().filter(x=>!f||x.id!==f.id).map(x=>`<option value="${x.id}" ${par===x.id?'selected':''}>${esc(x.name)}</option>`).join('')}`;
   $('#fd-par-w').hidden=!canNest;
   $('#fd-title').textContent=f?(par?'Editar subpasta':'Editar pasta'):(par?'Nova subpasta':'Nova pasta');$('#fd-name').value=f?f.name:'';$('#fd-err').textContent='';
-  const del=$('#fd-del');del.hidden=!f;del.classList.remove('armed');del.textContent='Excluir pasta';renderSwatches();
+  const del=$('#fd-del');del.hidden=!f;del.classList.remove('armed');del.textContent=f&&par?'Excluir subpasta':'Excluir pasta';renderSwatches();
   try{fdlg.showModal()}catch(e){fdlg.setAttribute('open','')}setTimeout(()=>$('#fd-name').focus(),30);
 }
 $('#fd-colors').addEventListener('click',e=>{const b=e.target.closest('[data-c]');if(b){fColor=+b.dataset.c;renderSwatches()}});
 $('#fd-cancel').addEventListener('click',()=>fdlg.close());
 $('#fd-del').addEventListener('click',e=>{const b=e.currentTarget;
-  if(!b.classList.contains('armed')){b.classList.add('armed');b.textContent='Confirmar: itens ficam sem pasta';setTimeout(()=>{b.classList.remove('armed');b.textContent='Excluir pasta'},4000);return}
+  const isSub=fEditing&&fEditing.parent&&folders.has(fEditing.parent);
+  if(!b.classList.contains('armed')){b.classList.add('armed');b.textContent=isSub?`Confirmar: itens vão para ${folders.get(fEditing.parent).name}`:'Confirmar: itens ficam sem pasta';setTimeout(()=>{b.classList.remove('armed');b.textContent='Excluir pasta'},4000);return}
+  if(isSub){const id=fEditing.id,par=fEditing.parent;fdlg.close();removeSub(id).then(()=>openFolder(par));return}
   const id=fEditing.id;fdlg.close();for(const x of subsOf(id))store.saveFolder({...x,parent:''});setView('tasks');store.removeFolder(id);toast('Pasta excluída','As pendências e arquivos dela continuam na agenda, sem pasta.')});
 $('#fform').addEventListener('submit',async e=>{
   e.preventDefault();const name=$('#fd-name').value.trim();
@@ -1928,7 +1978,7 @@ $('#fform').addEventListener('submit',async e=>{
   if(folderList().some(f=>norm(f.name)===norm(name)&&(f.parent||'')===parent&&(!fEditing||f.id!==fEditing.id))){$('#fd-err').textContent='Já existe uma pasta com esse nome aqui.';return}
   fdlg.close();
   if(fEditing){await store.saveFolder({...fEditing,name,color:fColor,parent});renderHeading();render()}
-  else{const id=await store.saveFolder({name,color:fColor,parent,order:Math.max(-1,...folderList().map(f=>f.order??0))+1,createdAt:Date.now()});openFolder(id)}
+  else{const ord=parent?Math.max(999,...subsOf(parent).map(f=>f.order??0))+1:Math.max(-1,...topFolders().map(f=>f.order??0))+1;const id=await store.saveFolder({name,color:fColor,parent,order:ord,createdAt:Date.now()});openFolder(id)}
 });
 function shift(n){const d=parse(cursor);const mode=view==='dash'?'day':view==='resumo'?'week':calMode;if(mode==='day')d.setDate(d.getDate()+n);else if(mode==='week')d.setDate(d.getDate()+7*n);else d.setMonth(d.getMonth()+n,1);cursor=ymd(d);render()}
 $('#prev').addEventListener('click',()=>shift(-1));$('#next').addEventListener('click',()=>shift(1));

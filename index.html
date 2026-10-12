@@ -948,12 +948,12 @@ function renderQuick(){
   const nForm=sel=>`<form class="quick" id="qnForm"><textarea id="qn" placeholder="Escreva uma anotação… A primeira linha vira o título." aria-label="Nova anotação"></textarea>
     <div class="r"><select id="qnWeek" aria-label="Semana">${weekOpts(noteGroup==='semana'&&view==='notes'?curWeekStr():'')}</select>${sel?`<select id="qnFolder" aria-label="Pasta">${folderOpts(lastFolder)}</select>`:''}<button class="btn primary">Salvar anotação</button></div></form>`;
   const PH='Título da nova pendência';
-  if(view==='tasks')q.innerHTML=tForm(PH,1);
+  if(view==='tasks')q.innerHTML='';
   else if(view==='dash')q.innerHTML=`<section class="hello"><h2>Olá, Guilherme Távora</h2></section>`;
   else if(view==='notes')q.innerHTML=nForm(1);
   else if(view==='files')q.innerHTML=`<div class="drop" id="drop"><span class="ico">${UPSVG}</span><div class="txt"><b>Arraste arquivos para cá</b><span class="small">PDF, imagens e CSV até 20 MB · Word, Excel e PowerPoint até 10 MB</span></div>
     <div class="r"><select id="upFolder" aria-label="Pasta dos arquivos">${folderOpts(lastFolder)}</select><label class="btn primary" for="fileIn" data-act="pickfile">Escolher arquivos</label></div></div>`;
-  else if(view==='folder')q.innerHTML=tForm('Título da pendência desta pasta',0);
+  else if(view==='folder')q.innerHTML='';
   else q.innerHTML='';
 }
 let lastFolder='';try{lastFolder=localStorage.getItem('oncourt.v6last')||''}catch(e){}
@@ -1005,7 +1005,7 @@ function viewTasks(){
   <div class="two">
     <section class="panel"><div class="panel-h"><h2>A fazer <span class="sub" style="font-family:var(--f-body)">${open.length}</span></h2>${gseg}</div>
       ${groups.length?groups.map(([n,l,c])=>`<div class="group-label ${c||''}">${n} <span class="n">${l.length}</span></div>${l.sort(by).map(i=>row(i,{mode:'due'})).join('')}`).join('')
-        :`<div class="empty"><strong>Tudo em dia.</strong><span>Escreva uma pendência no campo acima para começar.</span>${items.size?'':'<button class="btn" data-act="examples">Carregar exemplos</button>'}</div>`}</section>
+        :`<div class="empty"><strong>Tudo em dia.</strong><span>Toque em Novo para criar uma pendência.</span>${items.size?'':'<button class="btn" data-act="examples">Carregar exemplos</button>'}</div>`}</section>
     <section class="panel"><div class="panel-h"><h2>Concluídas</h2><span class="sub">${done.length} no total</span></div>
       ${dg.length?dg.map(([k,l])=>`<div class="group-label">${dl(k)} <span class="n">${l.length}</span></div>${l.map(i=>row(i,{mode:'done'})).join('')}`).join('')
         +(doneSorted.length>doneLimit?`<div class="more"><button class="btn" data-act="moredone">Ver mais ${Math.min(15,doneSorted.length-doneLimit)}</button></div>`:'')
@@ -1227,7 +1227,7 @@ function viewFolder(){
   <div class="two">
     <section class="panel"><div class="panel-h"><h2>Pendências</h2><span class="sub">ordenadas pelo prazo</span></div>
       ${groups.length?groups.map(([n,l,c])=>`<div class="group-label ${c||''}">${n} <span class="n">${l.length}</span></div>${l.sort(by).map(i=>row(i,{mode:'due'})).join('')}`).join('')
-        :'<div class="empty"><strong>Nada pendente.</strong><span>Use o campo acima para adicionar uma pendência com prazo.</span></div>'}
+        :'<div class="empty"><strong>Nada pendente.</strong><span>Toque em Novo para criar uma pendência nesta pasta.</span></div>'}
       ${done.length?`<button class="toggle-done" data-act="fdone">${showFolderDone?'Esconder':'Mostrar'} concluídas (${done.length})</button>${showFolderDone?done.map(i=>row(i,{mode:'due'})).join(''):''}`:''}</section>
     <div class="stack">
       <section class="panel"><div class="panel-h"><h2>Arquivos</h2><label class="btn" for="fileIn" data-act="pickfile" data-up="${curFolder}">Adicionar</label></div>

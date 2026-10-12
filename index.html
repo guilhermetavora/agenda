@@ -38,6 +38,15 @@
 @media (max-width:520px){.dstrip{gap:4px;padding:10px 12px 6px}.dnav{padding:12px 14px 2px}.fpend .panel-h .seg{width:100%}.fpend .panel-h .seg button{flex:1}}
 
 .arc{display:none!important}
+.blk-main b.bt{display:flex;align-items:baseline;gap:6px;min-width:0;white-space:nowrap;overflow:hidden}
+.blk-main .bn{font:600 12.5px/1.25 var(--f-body);color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.blk.is-done .blk-main .bn{text-decoration:line-through;color:var(--muted)}
+.blk-main .bh{flex:none}
+@media (max-width:640px){.blk.multi .bh{display:none}.blk.multi{padding:5px 6px;gap:5px}.blk.multi .chk{width:16px;height:16px}}
+
+.kmore{font:inherit;font-size:12.5px;font-weight:600;color:var(--accent);background:none;border:1px dashed var(--line);border-radius:10px;padding:9px;cursor:pointer}
+.kmore:hover{border-color:var(--accent);background:var(--hl)}
+
 .nv.fv .fchev{flex:none;opacity:.55;transition:transform .18s ease;margin-left:-2px}
 .nv.fv.fopen .fchev{transform:rotate(90deg)}
 
@@ -1242,9 +1251,9 @@ function viewDash(){
   h1=Math.min(h1,24);const y=m=>TOP+(m-h0*60)*PX;
   let rows='';for(let h=h0;h<h1;h++)rows+=`<button class="hr" style="top:${y(h*60)}px" data-act="newat" data-time="${pad(h)}:00" aria-label="Novo compromisso às ${pad(h)}:00"><span>${pad(h)}:00</span></button>`;
   const blk=blocks.map(b=>{const i=b.i,hgt=Math.max(24,(b.e-b.s)*PX-3),short=hgt<44;
-    return `<div class="blk k-${i.kind}${i.done?' is-done':''}${isHi(i)?' prio-alta':''}" style="top:${y(b.s)+1}px;height:${hgt}px;left:calc(58px + (100% - 64px) * ${b.col} / ${b.n});width:calc((100% - 64px) / ${b.n} - 4px)">
+    return `<div class="blk k-${i.kind}${i.done?' is-done':''}${isHi(i)?' prio-alta':''}${b.n>1?' multi':''}" style="top:${y(b.s)+1}px;height:${hgt}px;left:calc(58px + (100% - 64px) * ${b.col} / ${b.n});width:calc((100% - 64px) / ${b.n} - 4px)">
       ${i.kind==='task'?`<button class="chk" data-act="toggle" data-id="${i.id}" aria-pressed="${!!i.done}" aria-label="Marcar como concluída">${TICK}</button>`:''}
-      <button class="blk-main" data-act="edit" data-id="${i.id}">${short?`<b>${esc(i.title)} <span>${fmtMin(b.s)}</span></b>`:`<span>${fmtMin(b.s)}–${fmtMin(b.e)}</span><b>${esc(i.title)}</b>${i.place?`<em>${esc(i.place)}</em>`:''}`}</button></div>`}).join('');
+      <button class="blk-main" data-act="edit" data-id="${i.id}" title="${esc(i.title)}">${short?`<b class="bt"><span class="bn">${esc(i.title)}</span><span class="bh">${fmtMin(b.s)}</span></b>`:`<span>${fmtMin(b.s)}–${fmtMin(b.e)}</span><b class="bt"><span class="bn">${esc(i.title)}</span></b>${i.place?`<em>${esc(i.place)}</em>`:''}`}</button></div>`}).join('');
   const nowLine=isToday?`<div class="now" style="top:${y(nowMin)}px"><span>${hhmm(now)}</span></div>`:'';
   const firstAt=isToday?nowMin-90:(blocks.length?blocks[0].s-30:8*60);tlAuto=Math.max(0,y(firstAt)-TOP);
   const H=y(h1*60)+8;
@@ -1454,7 +1463,7 @@ function setStage(it,st){
   if(it.done){n.done=false;delete n.completedAt}
   store.save(n);
 }
-let boardShowAll=false;
+let boardMore={};
 function card(i,t){
   const st=stageOf(i),late=!i.done&&i.date&&i.date<t,f=folders.get(folderOf(i));
   const cl=i.checklist||[],cd=cl.filter(c=>c.done).length;
@@ -1474,11 +1483,11 @@ function boardView(its,t){
   const tasks_=its.filter(i=>i.kind==='task');
   const by=(a,b)=>hiFirst(a,b)||(a.date||'9').localeCompare(b.date||'9')||cmpTime(a,b);
   const todo=tasks_.filter(i=>stageOf(i)==='todo').sort(by),doing=tasks_.filter(i=>stageOf(i)==='doing').sort(by),done=tasks_.filter(i=>i.done).sort((a,b)=>doneAt(b)-doneAt(a));
-  const LIM=8,doneShown=boardShowAll?done:done.slice(0,LIM);
-  const col=(k,name,list,empty,extra='')=>`<div class="kcol" data-stage="${k}"><div class="kcol-h"><span class="kdot k-${k}"></span>${name}<span class="n">${list.length}</span></div>
-    <div class="kcol-b">${list.length?list.map(i=>card(i,t)).join(''):`<div class="kempty">${empty}</div>`}${extra}</div></div>`;
-  return `<div class="kanban">${col('todo','Pendentes',todo,'Nada pendente. Toque em Novo.')}${col('doing','Em produção',doing,'Arraste para cá o que está em andamento.')}
-    ${col('done','Resolvidas',doneShown,'O que você concluir aparece aqui.',done.length>LIM?`<button class="toggle-done" data-act="boardall">${boardShowAll?'Mostrar menos':`Ver todas (${done.length})`}</button>`:'')}</div>`;
+  const LIM=5;
+  const col=(k,name,list,empty)=>{const open=boardMore[k],shown=open?list:list.slice(0,LIM);
+    return `<div class="kcol" data-stage="${k}"><div class="kcol-h"><span class="kdot k-${k}"></span>${name}<span class="n">${list.length}</span></div>
+    <div class="kcol-b">${list.length?shown.map(i=>card(i,t)).join(''):`<div class="kempty">${empty}</div>`}${list.length>LIM?`<button class="kmore" data-act="boardall" data-c="${k}">${open?'Mostrar menos':`Ver mais ${list.length-LIM}`}</button>`:''}</div></div>`};
+  return `<div class="kanban">${col('todo','Pendentes',todo,'Nada pendente. Toque em Novo.')}${col('doing','Em produção',doing,'Arraste para cá o que está em andamento.')}${col('done','Resolvidas',done,'O que você concluir aparece aqui.')}</div>`;
 }
 /* arrastar cards entre colunas (computador) */
 let dragId=null;
@@ -1789,7 +1798,7 @@ function spawnNext(it){
 
 /* ---------- Ações ---------- */
 function toggleTask(it){const d=!it.done;const n={...it,done:d,status:'',updatedAt:Date.now()};if(d){n.completedAt=Date.now();spawnNext(n)}else delete n.completedAt;store.save(n)}
-function openFolder(id){curFolder=id;showFolderDone=false;folderDay='';try{localStorage.setItem('oncourt.v6folder',id)}catch(e){}setView('folder')}
+function openFolder(id){boardMore={};curFolder=id;showFolderDone=false;folderDay='';try{localStorage.setItem('oncourt.v6folder',id)}catch(e){}setView('folder')}
 function setView(v){if(v==='files')refreshUsage();view=v;try{localStorage.setItem('oncourt.v5view',v)}catch(e){}closeDrawer();renderQuick();render();window.scrollTo({top:0})}
 document.addEventListener('click',e=>{
   const fo=e.target.closest('[data-folder]');if(fo){openFolder(fo.dataset.folder);return}
@@ -1819,7 +1828,7 @@ document.addEventListener('click',e=>{
   else if(a==='tgroup'){taskGroup=b.dataset.g;try{localStorage.setItem('oncourt.v6group',taskGroup)}catch(e){}render()}
   else if(a==='fdone'){showFolderDone=!showFolderDone;render()}
   else if(a==='stage'){const it=items.get(id);if(it)setStage(it,b.dataset.st)}
-  else if(a==='boardall'){boardShowAll=!boardShowAll;render()}
+  else if(a==='boardall'){const c=b.dataset.c;boardMore[c]=!boardMore[c];render()}
   else if(a==='ftab'){folderTab=b.dataset.t;try{localStorage.setItem('oncourt.ftab',folderTab)}catch(e){}render()}
   else if(a==='fday'){folderDay=b.dataset.d;folderTab='day';render()}
   else if(a==='newfolder'){closeDrawer();openFolderDlg(null)}
